@@ -14,6 +14,17 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-hassad-hassadTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-hassad-hassadTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		F1E1604EB9144428865C7206 /* Tajawal-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FE6041F15D34345BB1C1EE7 /* Tajawal-Black.ttf */; };
+		B5C7EAB123D3461D850B140C /* Tajawal-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D59065AD86074427BE2B6B77 /* Tajawal-Bold.ttf */; };
+		545623A9F354490387AC9ABD /* Tajawal-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75E132417DB24EF2B0DE8A01 /* Tajawal-ExtraBold.ttf */; };
+		ACC918059256428C8D9AFACB /* Tajawal-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB03BBF8D5BC43B686CB1FDD /* Tajawal-ExtraLight.ttf */; };
+		48310809A56C471191239364 /* Tajawal-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4AEA07B608249C3986FA2FF /* Tajawal-Light.ttf */; };
+		26222F8F2C2247358B5BF4C6 /* Tajawal-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1AA961434C4FD2A2717F26 /* Tajawal-Medium.ttf */; };
+		D9A3AD7D3E1C4DD691A3350F /* Tajawal-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E11213A4AD5A4B52AF4A086D /* Tajawal-Regular.ttf */; };
+		6418749765AE4326ACAC89F5 /* ElMessiri-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D2E5DC085CB4A6BB2D048F0 /* ElMessiri-Bold.ttf */; };
+		9A47687AC60C4ADB8595FE85 /* ElMessiri-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA428AAAA1CA4636B3BB0472 /* ElMessiri-Medium.ttf */; };
+		B76B3446D2944B2FBA62284C /* ElMessiri-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C21AAC421EE4FB08B66D4C0 /* ElMessiri-Regular.ttf */; };
+		90982D84D7A343769690FBA9 /* ElMessiri-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5526D8C37504691AFBFE3F7 /* ElMessiri-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +56,17 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = hassad/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-hassad-hassadTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hassad-hassadTests.release.xcconfig"; path = "Target Support Files/Pods-hassad-hassadTests/Pods-hassad-hassadTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		4FE6041F15D34345BB1C1EE7 /* Tajawal-Black.ttf */ = {isa = PBXFileReference; name = "Tajawal-Black.ttf"; path = "../app/assets/fonts/Tajawal-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D59065AD86074427BE2B6B77 /* Tajawal-Bold.ttf */ = {isa = PBXFileReference; name = "Tajawal-Bold.ttf"; path = "../app/assets/fonts/Tajawal-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		75E132417DB24EF2B0DE8A01 /* Tajawal-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Tajawal-ExtraBold.ttf"; path = "../app/assets/fonts/Tajawal-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AB03BBF8D5BC43B686CB1FDD /* Tajawal-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Tajawal-ExtraLight.ttf"; path = "../app/assets/fonts/Tajawal-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4AEA07B608249C3986FA2FF /* Tajawal-Light.ttf */ = {isa = PBXFileReference; name = "Tajawal-Light.ttf"; path = "../app/assets/fonts/Tajawal-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6D1AA961434C4FD2A2717F26 /* Tajawal-Medium.ttf */ = {isa = PBXFileReference; name = "Tajawal-Medium.ttf"; path = "../app/assets/fonts/Tajawal-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E11213A4AD5A4B52AF4A086D /* Tajawal-Regular.ttf */ = {isa = PBXFileReference; name = "Tajawal-Regular.ttf"; path = "../app/assets/fonts/Tajawal-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6D2E5DC085CB4A6BB2D048F0 /* ElMessiri-Bold.ttf */ = {isa = PBXFileReference; name = "ElMessiri-Bold.ttf"; path = "../app/assets/fonts/ElMessiri-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EA428AAAA1CA4636B3BB0472 /* ElMessiri-Medium.ttf */ = {isa = PBXFileReference; name = "ElMessiri-Medium.ttf"; path = "../app/assets/fonts/ElMessiri-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8C21AAC421EE4FB08B66D4C0 /* ElMessiri-Regular.ttf */ = {isa = PBXFileReference; name = "ElMessiri-Regular.ttf"; path = "../app/assets/fonts/ElMessiri-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C5526D8C37504691AFBFE3F7 /* ElMessiri-SemiBold.ttf */ = {isa = PBXFileReference; name = "ElMessiri-SemiBold.ttf"; path = "../app/assets/fonts/ElMessiri-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +146,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				DA14F29566EC42978277A3D0 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +172,25 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		DA14F29566EC42978277A3D0 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				4FE6041F15D34345BB1C1EE7 /* Tajawal-Black.ttf */,
+				D59065AD86074427BE2B6B77 /* Tajawal-Bold.ttf */,
+				75E132417DB24EF2B0DE8A01 /* Tajawal-ExtraBold.ttf */,
+				AB03BBF8D5BC43B686CB1FDD /* Tajawal-ExtraLight.ttf */,
+				E4AEA07B608249C3986FA2FF /* Tajawal-Light.ttf */,
+				6D1AA961434C4FD2A2717F26 /* Tajawal-Medium.ttf */,
+				E11213A4AD5A4B52AF4A086D /* Tajawal-Regular.ttf */,
+				6D2E5DC085CB4A6BB2D048F0 /* ElMessiri-Bold.ttf */,
+				EA428AAAA1CA4636B3BB0472 /* ElMessiri-Medium.ttf */,
+				8C21AAC421EE4FB08B66D4C0 /* ElMessiri-Regular.ttf */,
+				C5526D8C37504691AFBFE3F7 /* ElMessiri-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +287,17 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F1E1604EB9144428865C7206 /* Tajawal-Black.ttf in Resources */,
+				B5C7EAB123D3461D850B140C /* Tajawal-Bold.ttf in Resources */,
+				545623A9F354490387AC9ABD /* Tajawal-ExtraBold.ttf in Resources */,
+				ACC918059256428C8D9AFACB /* Tajawal-ExtraLight.ttf in Resources */,
+				48310809A56C471191239364 /* Tajawal-Light.ttf in Resources */,
+				26222F8F2C2247358B5BF4C6 /* Tajawal-Medium.ttf in Resources */,
+				D9A3AD7D3E1C4DD691A3350F /* Tajawal-Regular.ttf in Resources */,
+				6418749765AE4326ACAC89F5 /* ElMessiri-Bold.ttf in Resources */,
+				9A47687AC60C4ADB8595FE85 /* ElMessiri-Medium.ttf in Resources */,
+				B76B3446D2944B2FBA62284C /* ElMessiri-Regular.ttf in Resources */,
+				90982D84D7A343769690FBA9 /* ElMessiri-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
