@@ -92,8 +92,8 @@ const getStyles = () => {
       backgroundColor: colors.mainScreen,
     },
     container: {
-      width: "92.5%",
-      alignSelf: "center",
+      width: '92.5%',
+      alignSelf: 'center',
     },
     tabBar: {
       backgroundColor: colors.white,
