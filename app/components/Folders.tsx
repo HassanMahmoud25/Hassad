@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {Image, Text, View, StyleSheet, ScrollView} from 'react-native';
 import {ThereAreNoItemsComp} from './ThereAreNoItemsComp';
-import colors from '../config';
+import colors from '../configs/colors';
 
 export const Folders = () => {
   const styles = useMemo(() => getStyles(), []);

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
-import colors from "../config";
+import colors from '../configs/colors';
 
 export const FavoriteScreen = () => {
   const styles = useMemo(() => getStyles(), []);

@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {Image, ScrollView, Text, View, StyleSheet} from 'react-native';
 import {ThereAreNoItemsComp} from './ThereAreNoItemsComp';
-import colors from '../config';
+import colors from '../configs/colors';
 
 export const Books = () => {
   const styles = useMemo(() => getStyles(), []);

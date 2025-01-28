@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import colors from "../config";
+import colors from '../configs/colors';
 
 interface ThereAreNoItemsCompProp {
   imageSrc: any;
@@ -36,7 +36,7 @@ const getStyles = () => {
     },
     textContainer: {
       width: '70%',
-      alignSelf: "center",
+      alignSelf: 'center',
     },
     imageStyle: {
       maxWidth: 400,

@@ -11,7 +11,7 @@ import {TabBar, TabView} from 'react-native-tab-view';
 import {Books} from '../components/Books';
 import {Folders} from '../components/Folders';
 import {useWindowDimensions} from 'react-native';
-import colors from '../config';
+import colors from '../configs/colors';
 
 export const MainScreen = () => {
   const dimensions = useWindowDimensions();
@@ -92,8 +92,8 @@ const getStyles = () => {
       backgroundColor: colors.mainScreen,
     },
     container: {
-      width: "92.5%",
-      alignSelf: "center",
+      width: '92.5%',
+      alignSelf: 'center',
     },
     tabBar: {
       backgroundColor: colors.white,

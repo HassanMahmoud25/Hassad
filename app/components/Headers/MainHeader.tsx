@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import colors from '../../config';
+import colors from '../../configs/colors';
 
 interface MainHeaderProps {
   title: string;

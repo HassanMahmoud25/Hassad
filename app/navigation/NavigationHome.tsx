@@ -5,7 +5,7 @@ import {MainScreen} from '../screens/Main';
 import {ProfileScreen} from '../screens/Profile';
 import {FavoriteScreen} from '../screens/Favorite';
 import {TouchableOpacity, StyleSheet} from 'react-native';
-import colors from '../config';
+import colors from '../configs/colors';
 
 // Bottom Tab Navigator
 const BottomTab = createBottomTabNavigator();
