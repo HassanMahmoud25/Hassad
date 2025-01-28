@@ -9,9 +9,14 @@ import {
   TextInput,
 } from 'react-native';
 import colors from '../configs/colors';
+import LanguageSelector from '../components/LnaguageSelector';
+import {useRTL} from '../contexts/RTLProvider'; // Import useRTL from RTLProvider
+import {useTranslation} from 'react-i18next';
 
 export const ProfileScreen = () => {
-  const styles = useMemo(() => getStyles(), []);
+  const {t} = useTranslation();
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <ScrollView style={styles.container}>
@@ -33,19 +38,19 @@ export const ProfileScreen = () => {
             <View style={styles.statItem}>
               <Text style={[styles.statText, styles.numberStyle]}>{'25'}</Text>
               <Text style={[styles.statText, styles.classNameStyle]}>
-                {'مُجلداً'}
+                {t('benefit')}
               </Text>
             </View>
             <View style={[styles.statItem, styles.middleItemBorders]}>
               <Text style={[styles.statText, styles.numberStyle]}>{'80'}</Text>
               <Text style={[styles.statText, styles.classNameStyle]}>
-                {'كتاباً'}
+                {t('book')}
               </Text>
             </View>
             <View style={styles.statItem}>
               <Text style={[styles.statText, styles.numberStyle]}>{'118'}</Text>
               <Text style={[styles.statText, styles.classNameStyle]}>
-                {'فائدة'}
+                {t('folder')}
               </Text>
             </View>
           </View>
@@ -53,7 +58,7 @@ export const ProfileScreen = () => {
 
         <View style={styles.formContainer}>
           <View>
-            <Text style={styles.label}>{'الاسم'}</Text>
+            <Text style={styles.label}>{t('name')}</Text>
             <View style={styles.inputWrapper}>
               <Image
                 source={require('../assets/icons/editIcon.png')}
@@ -65,7 +70,7 @@ export const ProfileScreen = () => {
           </View>
 
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>{'البريد الإلكتروني'}</Text>
+            <Text style={styles.label}>{t('email')}</Text>
             <View style={styles.inputWrapper}>
               <Image
                 source={require('../assets/icons/editIcon.png')}
@@ -79,25 +84,27 @@ export const ProfileScreen = () => {
             </View>
           </View>
 
+          <LanguageSelector />
+
           <TouchableOpacity style={styles.logoutButton}>
             <Image
               source={require('../assets/icons/logoutIcon.png')}
               resizeMode="contain"
               style={styles.logoutIcon}
             />
-            <Text style={styles.logoutText}>{'تسجيل خروج'}</Text>
+            <Text style={styles.logoutText}>{t('logout')}</Text>
           </TouchableOpacity>
         </View>
 
         <TouchableOpacity style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>{'حفظ التغييرات'}</Text>
+          <Text style={styles.saveButtonText}>{t('save changes')}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -134,7 +141,7 @@ const getStyles = () => {
       marginTop: 30,
     },
     statsContainer: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 10,
@@ -172,7 +179,7 @@ const getStyles = () => {
       marginTop: 15,
     },
     label: {
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
       fontFamily: 'ElMessiri-Medium',
       fontSize: 14,
       color: colors.labelText,
@@ -187,7 +194,7 @@ const getStyles = () => {
       height: 22,
       position: 'absolute',
       zIndex: 999,
-      left: 20,
+      [isRTL ? 'left' : 'right']: 20,
     },
     textInput: {
       backgroundColor: colors.white,
@@ -198,7 +205,7 @@ const getStyles = () => {
       fontSize: 16,
       color: colors.primaryBlack,
       lineHeight: 30,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
     },
     logoutButton: {
       marginTop: 30,
@@ -207,7 +214,7 @@ const getStyles = () => {
       borderRadius: 16,
       paddingHorizontal: 20,
       paddingVertical: 10,
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
@@ -220,7 +227,7 @@ const getStyles = () => {
       fontSize: 16,
       color: colors.red,
       lineHeight: 30,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
     },
     saveButton: {
       backgroundColor: colors.dimmed,

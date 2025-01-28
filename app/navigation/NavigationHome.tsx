@@ -6,12 +6,25 @@ import {ProfileScreen} from '../screens/Profile';
 import {FavoriteScreen} from '../screens/Favorite';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import colors from '../configs/colors';
+import {useTranslation} from 'react-i18next';
+import {useRTL} from '../contexts/RTLProvider'; // Import useRTL hook
 
 // Bottom Tab Navigator
 const BottomTab = createBottomTabNavigator();
 
 export const NavigationHome = () => {
+  const {t} = useTranslation();
+  const isRTL = useRTL();
   const styles = useMemo(() => getStyles(), []);
+
+  // Array of screens
+  const screens = [
+    {name: 'Main', component: MainScreen, title: t('home')},
+    {name: 'Favorite', component: FavoriteScreen, title: t('favorite')},
+    {name: 'Profile', component: ProfileScreen, title: t('profile')},
+  ];
+  // Reversing the order based on RTL state
+  const screensToRender = isRTL ? screens : [...screens].reverse();
 
   return (
     <BottomTab.Navigator
@@ -37,48 +50,23 @@ export const NavigationHome = () => {
         tabBarLabelStyle: styles.tabBarLabel,
         animation: 'shift',
       })}>
-      <BottomTab.Screen
-        options={{
-          title: 'الملف',
-          tabBarButton: props => (
-            <TouchableOpacity
-              onPress={props.onPress}
-              style={styles.tabBarButton}>
-              {props.children}
-            </TouchableOpacity>
-          ),
-        }}
-        name="Profile"
-        component={ProfileScreen}
-      />
-      <BottomTab.Screen
-        options={{
-          title: 'المفضلة',
-          tabBarButton: props => (
-            <TouchableOpacity
-              onPress={props.onPress}
-              style={styles.tabBarButton}>
-              {props.children}
-            </TouchableOpacity>
-          ),
-        }}
-        name="Favorite"
-        component={FavoriteScreen}
-      />
-      <BottomTab.Screen
-        options={{
-          title: 'الرئيسية',
-          tabBarButton: props => (
-            <TouchableOpacity
-              onPress={props.onPress}
-              style={styles.tabBarButton}>
-              {props.children}
-            </TouchableOpacity>
-          ),
-        }}
-        name="Main"
-        component={MainScreen}
-      />
+      {screensToRender.map(({name, component, title}) => (
+        <BottomTab.Screen
+          key={name}
+          options={{
+            title,
+            tabBarButton: props => (
+              <TouchableOpacity
+                onPress={props.onPress}
+                style={styles.tabBarButton}>
+                {props.children}
+              </TouchableOpacity>
+            ),
+          }}
+          name={name}
+          component={component}
+        />
+      ))}
     </BottomTab.Navigator>
   );
 };
