@@ -32,7 +32,7 @@ export const NavigationHome = () => {
         },
         headerShown: false,
         tabBarActiveTintColor: colors.primaryBlack,
-        tabBarInactiveTintColor: colors.lightGrey,
+        tabBarInactiveTintColor: colors.lightGray,
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,
         animation: 'shift',
