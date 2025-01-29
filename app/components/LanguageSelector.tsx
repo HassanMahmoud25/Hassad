@@ -22,7 +22,6 @@ const LanguageSelector = () => {
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   const changeLanguage = (lng: string) => {
-    console.log('changeLanguage', lng);
     i18n.changeLanguage(lng);
     Animated.timing(ballPosition, {
       toValue: lng === 'ar' ? 65 : 1,

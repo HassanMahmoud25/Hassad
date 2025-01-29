@@ -2,14 +2,18 @@ import React, {useMemo} from 'react';
 import {Image, Text, View, StyleSheet, ScrollView} from 'react-native';
 import {ThereAreNoItemsComp} from './ThereAreNoItemsComp';
 import colors from '../configs/colors';
+import {useTranslation} from 'react-i18next';
+import {useRTL} from '../contexts/RTLProvider'; // Import useRTL from RTLProvider
 
 export const Folders = () => {
-  const styles = useMemo(() => getStyles(), []);
+  const {t} = useTranslation();
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.folderCount}>{'عدد المجلدات :  0'}</Text>
+        <Text style={styles.folderCount}>{t('folders count', {count: 0})}</Text>
 
         <Image
           source={require('../assets/icons/filterIcon.png')}
@@ -20,21 +24,23 @@ export const Folders = () => {
 
       <ThereAreNoItemsComp
         imageSrc={require('../assets/images/thereAreNoFolders.png')}
-        text="لا يوجد مجلدات هيا نبدأ!"
-        subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ مجلداً"
+        text={t("No folders. Let's start!")}
+        subText={t(
+          'Start the experience and click the icon below to create a folder',
+        )}
       />
     </ScrollView>
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
     },
     headerContainer: {
       marginTop: 15,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-between',
     },

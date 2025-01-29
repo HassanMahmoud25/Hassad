@@ -1,4 +1,3 @@
-// RTLProvider.tsx
 import React, {
   createContext,
   useState,
@@ -8,6 +7,7 @@ import React, {
 } from 'react';
 import {I18nManager} from 'react-native';
 import i18n from '../configs/i18n';
+import RNRestart from 'react-native-restart';
 
 const RTLContext = createContext<boolean | undefined>(undefined);
 
@@ -27,12 +27,15 @@ export const RTLProvider = ({children}: RTLProviderProps) => {
   const [isRTL, setIsRTL] = useState(I18nManager.isRTL);
 
   useEffect(() => {
-    const handleLanguageChange = (lng: string) => {
-      I18nManager.forceRTL(lng === 'ar');
-      setIsRTL(lng === 'ar');
+    const handleLanguageChange = async (lng: string) => {
+      const newRTL = lng === 'ar';
+      I18nManager.forceRTL(newRTL);
+      setIsRTL(newRTL);
+      RNRestart.Restart();
     };
 
     i18n.on('languageChanged', handleLanguageChange);
+    handleLanguageChange(i18n.language);
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };

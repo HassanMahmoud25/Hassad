@@ -9,5 +9,17 @@
   "name": "Name",
   "book": "Book",
   "benefit": "Benefit",
-  "folder": "Folder"
+  "folder": "Folder",
+  "books": "Books",
+  "benefits": "Benefits",
+  "folders": "Folders",
+  "home page": "Home Page",
+  "folders count": "folders count: {{count}}",
+  "No folders. Let's start!": "No folders. Let's start!",
+  "Start the experience and click the icon below to create a folder": "Start your experience and click the icon below to create a folder",
+  "books count": "books count: {{count}}",
+  "No books. Let's start!": "No books. Let's start!",
+  "Start your experience and click the icon below to add a book": "Start your experience and click the icon below to add a book",
+  "You don't have favorite benefits!": "You don't have favorite benefits!",
+  "You can add a favorite benefit now. Go to the benefits and add what you like now!": "You can add a favorite benefit now. Go to the benefits and add what you like now!"
 }

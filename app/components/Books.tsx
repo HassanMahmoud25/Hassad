@@ -2,14 +2,18 @@ import React, {useMemo} from 'react';
 import {Image, ScrollView, Text, View, StyleSheet} from 'react-native';
 import {ThereAreNoItemsComp} from './ThereAreNoItemsComp';
 import colors from '../configs/colors';
+import {useTranslation} from 'react-i18next';
+import {useRTL} from '../contexts/RTLProvider';
 
 export const Books = () => {
-  const styles = useMemo(() => getStyles(), []);
+  const {t} = useTranslation();
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.folderCount}>{'عدد الكتب :  0'}</Text>
+        <Text style={styles.folderCount}>{t('books count', {count: 0})}</Text>
 
         <Image
           source={require('../assets/icons/filterIcon.png')}
@@ -20,21 +24,23 @@ export const Books = () => {
 
       <ThereAreNoItemsComp
         imageSrc={require('../assets/images/thereAreNoBooks.png')}
-        text="لا يوجد كتب هيا نبدأ!"
-        subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ كتاباً"
+        text={t("No books. Let's start!")}
+        subText={t(
+          'Start your experience and click the icon below to add a book',
+        )}
       />
     </ScrollView>
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
     },
     headerContainer: {
       marginTop: 15,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-between',
     },

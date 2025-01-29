@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import colors from '../configs/colors';
-import LanguageSelector from '../components/LnaguageSelector';
+import LanguageSelector from '../components/LanguageSelector';
 import {useRTL} from '../contexts/RTLProvider'; // Import useRTL from RTLProvider
 import {useTranslation} from 'react-i18next';
 

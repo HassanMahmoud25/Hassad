@@ -1,7 +1,7 @@
 {
   "home": "الرئيسية",
   "profile": "الملف",
-  "favorite": "المفضلة",
+  "favorite": "المُفضلة",
   "language": "اللغة",
   "logout": "تسجيل الخروج",
   "save changes": "حفظ التغييرات",
@@ -9,5 +9,17 @@
   "name": "الاسم",
   "book": "كتاباً",
   "benefit": "فائدة",
-  "folder": "مُجلداً"
+  "folder": "مُجلداً",
+  "books": "كتب",
+  "benefits": "فوائد",
+  "folders": "مجلدات",
+  "home page": "الصفحة الرئيسية",
+  "folders count": "عدد المجلدات: {{count}}",
+  "No folders. Let's start!": "لا توجد مجلدات. هيا نبدأ!",
+  "Start the experience and click the icon below to create a folder": "ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ مجلداً",
+  "books count": "عدد الكتب: {{count}}",
+  "No books. Let's start!": "لا توجد كتب. هيا نبدأ!",
+  "Start your experience and click the icon below to add a book": "ابدأ التجربة وانقر الأيقونة بالأسفل وأضف كتاباً",
+  "You don't have favorite benefits!": "ليس لديك فوائد مفضلة!",
+  "You can add a favorite benefit now. Go to the benefits and add what you like now!": "يمكنك إضافة فائدة مُفضلة الآن! اذهب إلى الفوائد وأضف ما تُحب إلى هنا"
 }

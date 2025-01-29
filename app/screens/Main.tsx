@@ -12,15 +12,28 @@ import {Books} from '../components/Books';
 import {Folders} from '../components/Folders';
 import {useWindowDimensions} from 'react-native';
 import colors from '../configs/colors';
+import {useTranslation} from 'react-i18next';
+import {useRTL} from '../contexts/RTLProvider';
 
 export const MainScreen = () => {
+  const {t} = useTranslation();
   const dimensions = useWindowDimensions();
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   const [index] = useState<number>(1);
-  const [routes] = useState<{key: string; title: string}[]>([
-    {key: 'books', title: 'كتب'},
-    {key: 'folders', title: 'مجلدات'},
-  ]);
+  // const [routes] = useState<{key: string; title: string}[]>([
+  //   {key: 'books', title: t('books')},
+  //   {key: 'folders', title: t('folders')},
+  // ]);
+  const routes = useMemo(
+    () => [
+      {key: 'books', title: t('books')},
+      {key: 'folders', title: t('folders')},
+    ],
+    [t],
+  );
+  const routesToRender = isRTL ? routes : [...routes].reverse();
 
   interface SceneProps {
     route: {key: string};
@@ -37,14 +50,12 @@ export const MainScreen = () => {
     }
   };
 
-  const styles = useMemo(() => getStyles(), []);
-
   return (
     <SafeAreaView style={styles.safeArea}>
-      <MainHeader title="الصفحة الرئيسية" showSearchIcon={true} />
+      <MainHeader title={t('home page')} showSearchIcon={true} />
 
       <TabView
-        navigationState={{index, routes}}
+        navigationState={{index, routes: routesToRender}}
         renderScene={renderScene}
         onIndexChange={() => {}}
         initialLayout={{width: dimensions.width}}
@@ -85,7 +96,7 @@ export const MainScreen = () => {
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     safeArea: {
       flex: 1,

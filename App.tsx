@@ -5,7 +5,7 @@ import {MainScreen} from './app/screens/Main';
 import {FavoriteScreen} from './app/screens/Favorite';
 import {ProfileScreen} from './app/screens/Profile';
 import {NavigationHome} from './app/navigation/NavigationHome';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {RTLProvider} from './app/contexts/RTLProvider'; // Update with the correct path
 
 const Stack = createNativeStackNavigator();

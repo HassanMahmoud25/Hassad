@@ -9,18 +9,24 @@ import {
 import {MainHeader} from '../components/Headers/MainHeader';
 import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
 import colors from '../configs/colors';
+import {useTranslation} from 'react-i18next';
+import {useRTL} from '../contexts/RTLProvider';
 
 export const FavoriteScreen = () => {
-  const styles = useMemo(() => getStyles(), []);
+  const {t} = useTranslation();
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <MainHeader title="المُفضلة" />
+      <MainHeader title={t('favorite')} />
       <ScrollView style={styles.scrollView}>
         <ThereAreNoItemsComp
           imageSrc={require('../assets/images/thereAreNoFavoriteBenefits.png')}
-          text="ليس لديك فوائد مُفضلة !"
-          subText="يمكنك إضافة فائدة مُفضلة الآن! اذهب إلى الفوائد وأضف ما تُحب إلى هنا"
+          text={t("You don't have favorite benefits!")}
+          subText={t(
+            'You can add a favorite benefit now. Go to the benefits and add what you like now!',
+          )}
         />
       </ScrollView>
       <TouchableOpacity style={styles.addButton}>
@@ -34,7 +40,7 @@ export const FavoriteScreen = () => {
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
