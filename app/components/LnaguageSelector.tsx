@@ -16,15 +16,16 @@ import colors from '../configs/colors';
 const LanguageSelector = () => {
   const {t} = useTranslation();
   const [ballPosition] = useState(
-    new Animated.Value(i18n.language === 'ar' ? 62 : 0),
+    new Animated.Value(i18n.language === 'ar' ? 65 : 1),
   );
   const isRTL = useRTL(); // Use RTL state from context
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   const changeLanguage = (lng: string) => {
+    console.log('changeLanguage', lng);
     i18n.changeLanguage(lng);
     Animated.timing(ballPosition, {
-      toValue: lng === 'ar' ? 62 : 0,
+      toValue: lng === 'ar' ? 65 : 1,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -93,7 +94,9 @@ const getStyles = (isRTL: boolean) => {
       paddingVertical: 5,
       width: 96,
       height: 30,
-      backgroundColor: colors.primaryBlue,
+      backgroundColor: colors.white,
+      borderWidth: 2,
+      borderColor: colors.primaryBlue,
     },
     iconContainer: {
       flexDirection: 'row',
@@ -109,7 +112,7 @@ const getStyles = (isRTL: boolean) => {
       width: 24,
       height: 24,
       borderRadius: 14,
-      backgroundColor: colors.primaryBlack,
+      backgroundColor: colors.lightBlackText,
       position: 'absolute',
       left: 67,
     },
