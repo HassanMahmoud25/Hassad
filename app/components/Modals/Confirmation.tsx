@@ -36,12 +36,12 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={onCancel}>
-                <Text style={styles.cancelText}>{cancelText}</Text>
+                <Text style={styles.btnText}>{cancelText}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.confirmButton]}
                 onPress={onConfirm}>
-                <Text style={styles.confirmText}>{confirmText}</Text>
+                <Text style={styles.btnText}>{confirmText}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -59,34 +59,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: 349,
-    height: 257,
+    width: "92.5%",
     backgroundColor: colors.white,
-    borderRadius: 22,
-    paddingHorizontal: 39,
-    paddingVertical: 23,
+    borderRadius: 23,
+    paddingHorizontal: 35,
+    paddingVertical: 30,
     alignItems: 'center',
-    gap: 8,
+    gap: 10,
   },
   title: {
-    width: 260,
-    height: 40,
     fontFamily: 'ElMessiri-Bold',
     fontSize: 18,
     lineHeight: 32,
     textAlign: 'center',
-    letterSpacing: -0.41,
     color: colors.primaryBlack,
   },
   contentContainer: {
     width: '100%',
     alignItems: 'center',
-    gap: 21,
+    gap: 20
   },
   message: {
     fontFamily: 'ElMessiri-Regular',
     fontSize: 16,
-    fontWeight: 400,
     lineHeight: 30,
     textAlign: 'center',
     color: colors.primaryBlack,
@@ -95,18 +90,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    gap: 28,
+    gap: 25,
   },
   button: {
-    width: 125,
+    paddingHorizontal: 40,
     height: 45,
-    flex: 1,
-    paddingVertical: 0,
-    paddingHorizontal: 0,
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 14,
   },
   cancelButton: {
     backgroundColor: colors.primaryBlue,
@@ -114,23 +105,12 @@ const styles = StyleSheet.create({
   confirmButton: {
     backgroundColor: colors.lightRed,
   },
-  cancelText: {
+  btnText: {
     fontFamily: 'ElMessiri-Regular',
     color: colors.white,
-    fontWeight: 500,
     fontSize: 20,
     lineHeight: 32,
-    alignSelf: 'center',
-    letterSpacing: -0.41,
-  },
-  confirmText: {
-    fontFamily: 'ElMessiri-Regular',
-    color: colors.white,
-    fontWeight: 500,
-    fontSize: 20,
-    lineHeight: 32,
-    alignSelf: 'center',
-    letterSpacing: -0.41,
+    textAlign: 'center'
   },
 });
 
