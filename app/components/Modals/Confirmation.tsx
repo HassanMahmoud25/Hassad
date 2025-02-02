@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cancelButton: {
-    backgroundColor: colors.primaryBlue,
+    backgroundColor: colors.primaryMove,
   },
   confirmButton: {
     backgroundColor: colors.lightRed,
