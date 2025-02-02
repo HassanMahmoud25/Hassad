@@ -1,5 +1,5 @@
 const colors = {
-  primaryBlue: '#2B6EE9',
+  primaryMove: '#6D28D2',
   primaryBlack: '#333333',
   mainScreen: '#F5F5F5',
   white: '#FFFFFF',

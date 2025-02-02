@@ -1,9 +1,7 @@
 import React, {useMemo} from 'react';
 import {
-  Image,
   SafeAreaView,
   ScrollView,
-  TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
@@ -23,13 +21,6 @@ export const FavoriteScreen = () => {
           subText="يمكنك إضافة فائدة مُفضلة الآن! اذهب إلى الفوائد وأضف ما تُحب إلى هنا"
         />
       </ScrollView>
-      <TouchableOpacity style={styles.addButton}>
-        <Image
-          source={require('../assets/icons/plusIcon.png')}
-          resizeMode="contain"
-          style={styles.addIcon}
-        />
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -42,21 +33,6 @@ const getStyles = () => {
     },
     scrollView: {
       flex: 1,
-    },
-    addButton: {
-      width: 53,
-      height: 53,
-      borderRadius: 50,
-      position: 'absolute',
-      right: 15,
-      bottom: 40,
-      backgroundColor: colors.primaryBlue,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    addIcon: {
-      width: 18,
-      height: 18,
-    },
+    }
   });
 };

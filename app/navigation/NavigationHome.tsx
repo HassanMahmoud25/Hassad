@@ -31,7 +31,7 @@ export const NavigationHome = () => {
           return <Ionicons name={iconName} size={25} color={color} />;
         },
         headerShown: false,
-        tabBarActiveTintColor: colors.primaryBlack,
+        tabBarActiveTintColor: colors.primaryMove,
         tabBarInactiveTintColor: colors.lightGrey,
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabBarLabel,

@@ -112,7 +112,7 @@ const getStyles = () => {
       borderRadius: 18,
     },
     tabButtonFocused: {
-      backgroundColor: colors.primaryBlack,
+      backgroundColor: colors.primaryMove,
     },
     tabButtonText: {
       color: colors.lightBlackText,
@@ -130,7 +130,7 @@ const getStyles = () => {
       position: 'absolute',
       right: 15,
       bottom: 40,
-      backgroundColor: colors.primaryBlue,
+      backgroundColor: colors.primaryMove,
       justifyContent: 'center',
       alignItems: 'center',
     },
