@@ -37,7 +37,7 @@ export const NavigationHome = () => {
               ? require('../assets/icons/profileTabIcon_active.png')
               : require('../assets/icons/profileTabIcon_inactive.png');
 
-            dimentions = {width: 24, height: 24};
+            dimentions = {width: 23, height: 23};
           }
 
           return (
