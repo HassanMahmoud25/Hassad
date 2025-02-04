@@ -1,12 +1,8 @@
 import React, {useMemo} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
-import colors from "../config";
+import colors from '../config';
 
 export const FavoriteScreen = () => {
   const styles = useMemo(() => getStyles(), []);
@@ -14,7 +10,7 @@ export const FavoriteScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MainHeader title="المُفضلة" />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <ThereAreNoItemsComp
           imageSrc={require('../assets/images/thereAreNoFavoriteBenefits.png')}
           text="ليس لديك فوائد مُفضلة !"
@@ -30,9 +26,12 @@ const getStyles = () => {
     container: {
       flex: 1,
       backgroundColor: colors.mainScreen,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     scrollView: {
       flex: 1,
-    }
+      justifyContent: 'center',
+    },
   });
 };

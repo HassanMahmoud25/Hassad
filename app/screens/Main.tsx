@@ -1,25 +1,20 @@
 import React, {useMemo, useState} from 'react';
-import {
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import {TabBar, TabView} from 'react-native-tab-view';
 import {Books} from '../components/Books';
 import {Folders} from '../components/Folders';
 import {useWindowDimensions} from 'react-native';
 import colors from '../config';
+import {AddComponent} from '../components/AddComponent';
 
 export const MainScreen = () => {
   const dimensions = useWindowDimensions();
 
   const [index] = useState<number>(1);
   const [routes] = useState<{key: string; title: string}[]>([
-    {key: 'books', title: 'كتب'},
     {key: 'folders', title: 'مجلدات'},
+    {key: 'books', title: 'كتب'},
   ]);
 
   interface SceneProps {
@@ -73,14 +68,7 @@ export const MainScreen = () => {
           ),
         }}
       />
-
-      <TouchableOpacity style={styles.floatingButton}>
-        <Image
-          source={require('../assets/icons/plusIcon.png')}
-          resizeMode="contain"
-          style={styles.plusIcon}
-        />
-      </TouchableOpacity>
+      <AddComponent positionStyle={styles.addBtnStyle} />
     </SafeAreaView>
   );
 };
@@ -89,18 +77,19 @@ const getStyles = () => {
   return StyleSheet.create({
     safeArea: {
       flex: 1,
-      backgroundColor: colors.mainScreen,
     },
     container: {
-      width: '92.5%',
+      width: '100%',
       alignSelf: 'center',
     },
     tabBar: {
-      backgroundColor: colors.white,
       borderRadius: 20,
       elevation: 0,
+      backgroundColor: colors.white,
       justifyContent: 'space-between',
-      marginTop: 20,
+      marginTop: 10,
+      width: '92.5%',
+      alignSelf: 'center',
     },
     indicator: {
       height: 0,
@@ -123,20 +112,8 @@ const getStyles = () => {
     tabButtonTextFocused: {
       color: colors.white,
     },
-    floatingButton: {
-      width: 53,
-      height: 53,
-      borderRadius: 50,
-      position: 'absolute',
-      right: 15,
-      bottom: 40,
-      backgroundColor: colors.primaryMove,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    plusIcon: {
-      width: 18,
-      height: 18,
+    addBtnStyle: {
+      right: '3.75%',
     },
   });
 };
