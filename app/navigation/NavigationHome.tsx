@@ -18,20 +18,20 @@ export const NavigationHome = () => {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused}) => {
           let src: any;
-          let dimentions: {} = {width: 25, height: 25};
+          let dimentions: {} = {width: 25, height: 24};
 
           if (route.name === 'Main') {
             src = focused
               ? require('../assets/icons/homeTabIcon_active.png')
               : require('../assets/icons/homeTabIcon_inactive.png');
 
-            dimentions = {with: 31, height: 31};
+            dimentions = {with: 25, height: 24};
           } else if (route.name === 'Favorite') {
             src = focused
               ? require('../assets/icons/favoriteTabIcon_active.png')
               : require('../assets/icons/favoriteTabIcon_inactive.png');
 
-            dimentions = {with: 26, height: 26};
+            dimentions = {with: 24, height: 22};
           } else if (route.name === 'Profile') {
             src = focused
               ? require('../assets/icons/profileTabIcon_active.png')
