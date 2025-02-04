@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import colors from "../config";
+import colors from '../config';
 
 export const ProfileScreen = () => {
   const styles = useMemo(() => getStyles(), []);
@@ -105,6 +105,7 @@ const getStyles = () => {
     },
     profileContainer: {
       flex: 1,
+      paddingBottom: 30,
     },
     profileBackgroundImage: {
       width: '100%',

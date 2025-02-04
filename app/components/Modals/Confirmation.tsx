@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: "92.5%",
+    width: '92.5%',
     backgroundColor: colors.white,
     borderRadius: 23,
     paddingHorizontal: 35,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     width: '100%',
     alignItems: 'center',
-    gap: 20
+    gap: 20,
   },
   message: {
     fontFamily: 'ElMessiri-Regular',
@@ -90,10 +90,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    gap: 25,
   },
   button: {
-    paddingHorizontal: 40,
+    width: '47.5%',
     height: 45,
     borderRadius: 16,
     alignItems: 'center',
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 20,
     lineHeight: 32,
-    textAlign: 'center'
+    textAlign: 'center',
   },
 });
 

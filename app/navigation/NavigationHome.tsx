@@ -1,10 +1,9 @@
 import React, {useMemo} from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {MainScreen} from '../screens/Main';
 import {ProfileScreen} from '../screens/Profile';
 import {FavoriteScreen} from '../screens/Favorite';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, Image} from 'react-native';
 import colors from '../config';
 
 // Bottom Tab Navigator
@@ -17,18 +16,37 @@ export const NavigationHome = () => {
     <BottomTab.Navigator
       initialRouteName="Main"
       screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color}) => {
-          let iconName: string = 'help-outline';
+        tabBarIcon: ({focused}) => {
+          let src: any;
+          let dimentions: {} = {width: 25, height: 25};
 
           if (route.name === 'Main') {
-            iconName = focused ? 'home' : 'home-outline';
+            src = focused
+              ? require('../assets/icons/homeTabIcon_active.png')
+              : require('../assets/icons/homeTabIcon_inactive.png');
+
+            dimentions = {with: 31, height: 31};
           } else if (route.name === 'Favorite') {
-            iconName = focused ? 'heart' : 'heart-outline';
+            src = focused
+              ? require('../assets/icons/favoriteTabIcon_active.png')
+              : require('../assets/icons/favoriteTabIcon_inactive.png');
+
+            dimentions = {with: 26, height: 26};
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'person-circle' : 'person-circle-outline';
+            src = focused
+              ? require('../assets/icons/profileTabIcon_active.png')
+              : require('../assets/icons/profileTabIcon_inactive.png');
+
+            dimentions = {width: 24, height: 24};
           }
 
-          return <Ionicons name={iconName} size={25} color={color} />;
+          return (
+            <Image
+              source={src}
+              resizeMode={'contain'}
+              style={{...dimentions}}
+            />
+          );
         },
         headerShown: false,
         tabBarActiveTintColor: colors.primaryMove,
@@ -86,10 +104,10 @@ export const NavigationHome = () => {
 const getStyles = () => {
   return StyleSheet.create({
     tabBar: {
-      height: 75,
+      height: 80,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
-      paddingTop: 5,
+      paddingTop: 10,
       justifyContent: 'space-between',
     },
     tabBarLabel: {

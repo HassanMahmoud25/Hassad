@@ -1,5 +1,6 @@
 const colors = {
   primaryMove: '#6D28D2',
+  lightMove: '#D3B5F3',
   primaryBlack: '#333333',
   mainScreen: '#F5F5F5',
   white: '#FFFFFF',
@@ -11,6 +12,8 @@ const colors = {
   lightBlackText: '#8D898C',
   labelText: '#5B5B5B',
   lighterGrey: '#DDDDDD',
+  lightTextGrey: '#999999',
+  transparentWhite: 'rgba(255, 255, 255, 0.35)',
 };
 
 export default colors;

@@ -1,15 +1,54 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Image, Text, View, StyleSheet, ScrollView} from 'react-native';
 import {ThereAreNoItemsComp} from './ThereAreNoItemsComp';
 import colors from '../config';
+import {Folder} from './Folder';
 
 export const Folders = () => {
+  const [folders] = useState<
+    {key: number; folderName: string; booksCount: number}[]
+  >([
+    {
+      key: 1,
+      folderName: 'كتب علمية كتب علمية كتب علمية',
+      booksCount: 7,
+    },
+    {
+      key: 2,
+      folderName: 'كتب علمية',
+      booksCount: 7,
+    },
+    {
+      key: 3,
+      folderName: 'كتب علمية',
+      booksCount: 7,
+    },
+    {
+      key: 4,
+      folderName: 'كتب علمية',
+      booksCount: 7,
+    },
+    {
+      key: 5,
+      folderName: 'كتب علمية',
+      booksCount: 7,
+    },
+    {
+      key: 6,
+      folderName: 'كتب علمية',
+      booksCount: 7,
+    },
+  ]);
+
   const styles = useMemo(() => getStyles(), []);
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.folderCount}>{'عدد المجلدات :  0'}</Text>
+        <Text
+          style={
+            styles.folderCount
+          }>{`عدد المجلدات :  ${folders.length}`}</Text>
 
         <Image
           source={require('../assets/icons/filterIcon.png')}
@@ -18,12 +57,26 @@ export const Folders = () => {
         />
       </View>
 
-      <ThereAreNoItemsComp
-        imageSrc={require('../assets/images/thereAreNoFolders.png')}
-        text="لا يوجد مجلدات هيا نبدأ!"
-        subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ مجلداً"
-      />
-    </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {folders.length > 0 ? (
+          <View style={styles.foldersContainer}>
+            {folders.map(folder => (
+              <Folder
+                key={folder.key}
+                folderName={folder.folderName}
+                booksCount={folder.booksCount}
+              />
+            ))}
+          </View>
+        ) : (
+          <ThereAreNoItemsComp
+            imageSrc={require('../assets/images/thereAreNoFolders.png')}
+            text="لا يوجد مجلدات هيا نبدأ!"
+            subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ مجلداً"
+          />
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -31,9 +84,11 @@ const getStyles = () => {
   return StyleSheet.create({
     container: {
       flex: 1,
+      paddingHorizontal: '3.75%',
     },
     headerContainer: {
       marginTop: 15,
+      paddingBottom: 15,
       flexDirection: 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -45,8 +100,18 @@ const getStyles = () => {
       color: colors.primaryBlack,
     },
     filterIcon: {
-      width: 22,
-      height: 22,
+      width: 17,
+      height: 17,
+    },
+    foldersContainer: {
+      flex: 1,
+      width: '100%',
+      marginTop: 10,
+      flexDirection: 'row-reverse',
+      flexWrap: 'wrap',
+      columnGap: '5%',
+      rowGap: 20,
+      marginBottom: 35,
     },
   });
 };

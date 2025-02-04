@@ -46,6 +46,8 @@ const getStyles = () => {
     mainContainer: {
       paddingTop: 30,
       paddingBottom: 10,
+      width: '92.5%',
+      alignSelf: 'center',
     },
     innerContainer: {
       width: '100%',
@@ -61,17 +63,17 @@ const getStyles = () => {
     },
     iconContainer: {
       position: 'absolute',
-      right: 10,
+      right: 0,
+      paddingHorizontal: 5,
       paddingVertical: 5,
-      paddingHorizontal: 10,
     },
     headerBackIcon: {
-      width: 8,
-      height: 15,
+      width: 9,
+      height: 16,
     },
     headerSearchIcon: {
-      width: 23,
-      height: 23,
+      width: 24,
+      height: 24,
     },
   });
 };
