@@ -112,6 +112,7 @@ const getStyles = (isRTL: boolean) => {
     },
     profileContainer: {
       flex: 1,
+      paddingBottom: 30,
     },
     profileBackgroundImage: {
       width: '100%',

@@ -6,7 +6,10 @@ import {FavoriteScreen} from './app/screens/Favorite';
 import {ProfileScreen} from './app/screens/Profile';
 import {NavigationHome} from './app/navigation/NavigationHome';
 import {SafeAreaView, StatusBar} from 'react-native';
-import {RTLProvider} from './app/contexts/RTLProvider'; // Update with the correct path
+import {BookBenefitsScreen} from './app/screens/BookBenefitsScreen';
+import {BenefitDetails} from './app/screens/BenefitDetails';
+import {FolderBooks} from './app/screens/FolderBooks';
+import {RTLProvider} from './app/contexts/RTLProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +26,21 @@ function App(): React.JSX.Element {
             <Stack.Screen name="Favorite" component={FavoriteScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="home" component={NavigationHome} />
+            <Stack.Screen
+              name="bookBenefits"
+              component={BookBenefitsScreen}
+              options={{animation: 'fade_from_bottom'}}
+            />
+            <Stack.Screen
+              name="benefitDetails"
+              component={BenefitDetails}
+              options={{animation: 'fade_from_bottom'}}
+            />
+            <Stack.Screen
+              name="folderBooks"
+              component={FolderBooks}
+              options={{animation: 'fade_from_bottom'}}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </RTLProvider>

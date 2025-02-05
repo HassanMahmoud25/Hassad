@@ -1,11 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import {TabBar, TabView} from 'react-native-tab-view';
 import {Books} from '../components/Books';
@@ -14,6 +8,7 @@ import {useWindowDimensions} from 'react-native';
 import colors from '../configs/colors';
 import {useTranslation} from 'react-i18next';
 import {useRTL} from '../contexts/RTLProvider';
+import {AddComponent} from '../components/AddComponent';
 
 export const MainScreen = () => {
   const {t} = useTranslation();
@@ -21,7 +16,7 @@ export const MainScreen = () => {
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
-  const [index] = useState<number>(1);
+  const [index] = useState<number>(0);
   // const [routes] = useState<{key: string; title: string}[]>([
   //   {key: 'books', title: t('books')},
   //   {key: 'folders', title: t('folders')},
@@ -84,14 +79,7 @@ export const MainScreen = () => {
           ),
         }}
       />
-
-      <TouchableOpacity style={styles.floatingButton}>
-        <Image
-          source={require('../assets/icons/plusIcon.png')}
-          resizeMode="contain"
-          style={styles.plusIcon}
-        />
-      </TouchableOpacity>
+      <AddComponent positionStyle={styles.addBtnStyle} />
     </SafeAreaView>
   );
 };
@@ -100,18 +88,19 @@ const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     safeArea: {
       flex: 1,
-      backgroundColor: colors.mainScreen,
     },
     container: {
-      width: '92.5%',
+      width: '100%',
       alignSelf: 'center',
     },
     tabBar: {
-      backgroundColor: colors.white,
       borderRadius: 20,
       elevation: 0,
+      backgroundColor: colors.white,
       justifyContent: 'space-between',
-      marginTop: 20,
+      marginTop: 10,
+      width: '92.5%',
+      alignSelf: 'center',
     },
     indicator: {
       height: 0,
@@ -123,7 +112,7 @@ const getStyles = (isRTL: boolean) => {
       borderRadius: 18,
     },
     tabButtonFocused: {
-      backgroundColor: colors.primaryBlack,
+      backgroundColor: colors.primaryMove,
     },
     tabButtonText: {
       color: colors.lightBlackText,
@@ -134,20 +123,8 @@ const getStyles = (isRTL: boolean) => {
     tabButtonTextFocused: {
       color: colors.white,
     },
-    floatingButton: {
-      width: 53,
-      height: 53,
-      borderRadius: 50,
-      position: 'absolute',
-      [isRTL ? 'left' : 'right']: 15,
-      bottom: 40,
-      backgroundColor: colors.primaryBlue,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    plusIcon: {
-      width: 18,
-      height: 18,
+    addBtnStyle: {
+      [isRTL ? 'left' : 'right']: '3.75%',
     },
   });
 };
