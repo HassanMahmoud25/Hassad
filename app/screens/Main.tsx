@@ -139,7 +139,7 @@ const getStyles = (isRTL: boolean) => {
       height: 53,
       borderRadius: 50,
       position: 'absolute',
-      right: 15,
+      [isRTL ? 'left' : 'right']: 15,
       bottom: 40,
       backgroundColor: colors.primaryBlue,
       justifyContent: 'center',

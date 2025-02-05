@@ -25,20 +25,25 @@ interface RTLProviderProps {
 
 export const RTLProvider = ({children}: RTLProviderProps) => {
   const [isRTL, setIsRTL] = useState(I18nManager.isRTL);
+  const [initialRender, setInitialRender] = useState(true);
 
   useEffect(() => {
     const handleLanguageChange = async (lng: string) => {
       const newRTL = lng === 'ar';
       I18nManager.forceRTL(newRTL);
       setIsRTL(newRTL);
-      RNRestart.Restart();
+      if (!initialRender) {
+        RNRestart.Restart();
+      }
     };
 
     i18n.on('languageChanged', handleLanguageChange);
     handleLanguageChange(i18n.language);
+    setInitialRender(false);
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <RTLContext.Provider value={isRTL}>{children}</RTLContext.Provider>;
