@@ -35,6 +35,7 @@ const LanguageSelector = () => {
       <View style={styles.row}>
         <Text style={styles.label}>{t('language')}</Text>
         <TouchableOpacity
+          activeOpacity={0.5}
           style={styles.switchContainer}
           onPress={() => changeLanguage(i18n.language === 'en' ? 'ar' : 'en')}>
           <View style={[styles.iconContainer]}>

@@ -34,11 +34,13 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             <Text style={styles.message}>{message}</Text>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
+                activeOpacity={0.5}
                 style={[styles.button, styles.cancelButton]}
                 onPress={onCancel}>
                 <Text style={styles.btnText}>{cancelText}</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                activeOpacity={0.5}
                 style={[styles.button, styles.confirmButton]}
                 onPress={onConfirm}>
                 <Text style={styles.btnText}>{confirmText}</Text>

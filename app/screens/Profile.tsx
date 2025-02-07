@@ -86,7 +86,7 @@ export const ProfileScreen = () => {
 
           <LanguageSelector />
 
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity activeOpacity={0.5} style={styles.logoutButton}>
             <Image
               source={require('../assets/icons/logoutIcon.png')}
               resizeMode="contain"
@@ -96,7 +96,7 @@ export const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity activeOpacity={0.5} style={styles.saveButton}>
           <Text style={styles.saveButtonText}>{t('save changes')}</Text>
         </TouchableOpacity>
       </View>

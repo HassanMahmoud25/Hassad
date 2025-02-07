@@ -19,7 +19,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
     <View style={styles.mainContainer}>
       <View style={styles.innerContainer}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity activeOpacity={0.5} style={styles.iconContainer}>
           {!!showBackIcon && (
             <Image
               source={require('../../assets/icons/Arrow_black.png')}

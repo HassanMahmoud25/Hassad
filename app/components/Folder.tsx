@@ -17,6 +17,7 @@ export const Folder: React.FC<{
 
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       onPress={() => {
         navigation.navigate('folderBooks', {title: 'كتب علمية'});
       }}

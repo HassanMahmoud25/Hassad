@@ -29,6 +29,7 @@ export const Benefit: React.FC<{
 
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       onPress={() => navigation.navigate('benefitDetails')}
       style={[styles.benefitContainer, {backgroundColor: bgColor}]}>
       <View style={styles.benefitHeaderContainer}>
