@@ -95,8 +95,7 @@ const getStyles = (isRTL: boolean) => {
       width: 96,
       height: 30,
       backgroundColor: colors.white,
-      borderWidth: 2,
-      borderColor: colors.primaryBlue,
+      borderWidth: 2
     },
     iconContainer: {
       flexDirection: 'row',
