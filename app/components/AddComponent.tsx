@@ -7,7 +7,9 @@ export const AddComponent: React.FC<{positionStyle: any}> = ({
   const styles = useMemo(() => getStyles(), []);
 
   return (
-    <TouchableOpacity style={[styles.floatingButton, positionStyle]}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={[styles.floatingButton, positionStyle]}>
       <Image
         source={require('../assets/icons/plusIcon.png')}
         resizeMode="contain"
@@ -24,7 +26,6 @@ const getStyles = () => {
       height: 53,
       borderRadius: 50,
       position: 'absolute',
-      bottom: 40,
       backgroundColor: colors.primaryMove,
       justifyContent: 'center',
       alignItems: 'center',

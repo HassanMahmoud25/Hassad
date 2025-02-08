@@ -75,6 +75,7 @@ export const NavigationHome = () => {
             title,
             tabBarButton: props => (
               <TouchableOpacity
+                activeOpacity={0.4}
                 onPress={props.onPress}
                 style={styles.tabBarButton}>
                 {props.children}

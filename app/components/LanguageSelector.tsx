@@ -35,6 +35,7 @@ const LanguageSelector = () => {
       <View style={styles.row}>
         <Text style={styles.label}>{t('language')}</Text>
         <TouchableOpacity
+          activeOpacity={0.5}
           style={styles.switchContainer}
           onPress={() => changeLanguage(i18n.language === 'en' ? 'ar' : 'en')}>
           <View style={[styles.iconContainer]}>
@@ -83,7 +84,6 @@ const getStyles = (isRTL: boolean) => {
       fontFamily: 'ElMessiri-Medium',
       fontSize: 16,
       color: colors.labelText,
-      marginRight: 10,
     },
     switchContainer: {
       flexDirection: 'row',
@@ -94,8 +94,7 @@ const getStyles = (isRTL: boolean) => {
       width: 96,
       height: 30,
       backgroundColor: colors.white,
-      borderWidth: 2,
-      borderColor: colors.primaryBlue,
+      borderWidth: 2
     },
     iconContainer: {
       flexDirection: 'row',

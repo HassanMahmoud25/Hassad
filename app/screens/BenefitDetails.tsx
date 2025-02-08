@@ -10,8 +10,11 @@ import {
 import {MainHeader} from '../components/Headers/MainHeader';
 import colors from '../configs/colors';
 import ConfirmationModal from '../components/Modals/Confirmation';
+import {useRTL} from '../contexts/RTLProvider';
 
 export const BenefitDetails = () => {
+  const isRTL = useRTL();
+
   const [favorite, setFavorite] = useState<boolean>(false);
   const [showDeleteBenefitModal, setShowDeleteBenefitModal] =
     useState<boolean>(false);
@@ -28,7 +31,7 @@ export const BenefitDetails = () => {
     setShowDeleteBenefitModal(false);
   };
 
-  const styles = useMemo(() => getStyles(), []);
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <View style={styles.mainContainer}>
@@ -104,7 +107,7 @@ export const BenefitDetails = () => {
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     mainContainer: {
       flex: 1,
@@ -120,7 +123,7 @@ const getStyles = () => {
     },
     benefitTitleAndDate: {
       width: '100%',
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingBottom: 15,
@@ -145,7 +148,7 @@ const getStyles = () => {
       fontFamily: 'Tajawal-Medium',
       fontSize: 17,
       color: '#354152',
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
       lineHeight: 30,
     },
     benefitImgStyle: {
@@ -154,7 +157,7 @@ const getStyles = () => {
     },
     pageNumberContainer: {
       marginTop: 10,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
@@ -170,7 +173,7 @@ const getStyles = () => {
       position: 'absolute',
       alignSelf: 'center',
       bottom: 40,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-around',
       paddingHorizontal: 50,
@@ -178,6 +181,11 @@ const getStyles = () => {
       backgroundColor: colors.white,
       width: '92.5%',
       borderRadius: 28,
+      shadowColor: colors.black,
+      shadowOffset: { width: 5, height: 5 },
+      shadowOpacity: 0.2,
+      shadowRadius: 28,
+      elevation: 1.5,
     },
     actionIconStyle: {
       width: 25,

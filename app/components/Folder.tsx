@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { useRTL } from '../contexts/RTLProvider';
 
 type ParamList = {
   folderBooks: {title: string};
@@ -11,12 +12,15 @@ export const Folder: React.FC<{
   folderName: string;
   booksCount: number;
 }> = ({folderName, booksCount}) => {
+  const isRTL = useRTL();
+
   const navigation = useNavigation<NavigationProp<ParamList>>();
 
-  const styles = useMemo(() => getStyles(), []);
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       onPress={() => {
         navigation.navigate('folderBooks', {title: 'كتب علمية'});
       }}
@@ -48,7 +52,7 @@ export const Folder: React.FC<{
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     mainContainer: {
       width: '47.5%',
@@ -73,7 +77,7 @@ const getStyles = () => {
       alignItems: 'center',
       position: 'absolute',
       top: 10,
-      left: 5,
+      [isRTL ? 'right' : 'left']: 7.5,
       width: 20,
       height: 25,
     },
@@ -85,13 +89,13 @@ const getStyles = () => {
       fontFamily: 'ElMessiri-Bold',
       fontSize: 13,
       color: colors.primaryBlack,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
     },
     booksCountStyle: {
       fontFamily: 'ElMessiri-SemiBold',
       fontSize: 11,
       color: colors.lightTextGrey,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
       marginTop: 3,
     },
   });

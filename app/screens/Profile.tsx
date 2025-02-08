@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import colors from '../configs/colors';
 import LanguageSelector from '../components/LanguageSelector';
-import {useRTL} from '../contexts/RTLProvider'; // Import useRTL from RTLProvider
+import {useRTL} from '../contexts/RTLProvider';
 import {useTranslation} from 'react-i18next';
 
 export const ProfileScreen = () => {
@@ -86,7 +86,7 @@ export const ProfileScreen = () => {
 
           <LanguageSelector />
 
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity activeOpacity={0.5} style={styles.logoutButton}>
             <Image
               source={require('../assets/icons/logoutIcon.png')}
               resizeMode="contain"
@@ -96,9 +96,9 @@ export const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.saveButton}>
+        {/* <TouchableOpacity activeOpacity={0.5} style={styles.saveButton}>
           <Text style={styles.saveButtonText}>{t('save changes')}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </ScrollView>
   );
@@ -187,7 +187,7 @@ const getStyles = (isRTL: boolean) => {
       marginBottom: 10,
     },
     inputWrapper: {
-      flexDirection: 'row',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
     },
     editIcon: {
@@ -195,7 +195,7 @@ const getStyles = (isRTL: boolean) => {
       height: 22,
       position: 'absolute',
       zIndex: 999,
-      [isRTL ? 'left' : 'right']: 20,
+      [isRTL ? 'right' : 'left']: 20,
     },
     textInput: {
       backgroundColor: colors.white,
@@ -206,7 +206,7 @@ const getStyles = (isRTL: boolean) => {
       fontSize: 16,
       color: colors.primaryBlack,
       lineHeight: 30,
-      textAlign: isRTL ? 'left' : 'right',
+      textAlign: isRTL ? 'right' : 'left',
     },
     logoutButton: {
       marginTop: 30,
@@ -215,7 +215,7 @@ const getStyles = (isRTL: boolean) => {
       borderRadius: 16,
       paddingHorizontal: 20,
       paddingVertical: 10,
-      flexDirection: isRTL ? 'row' : 'row-reverse',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },

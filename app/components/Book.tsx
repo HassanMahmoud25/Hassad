@@ -2,6 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useRTL} from '../contexts/RTLProvider';
 
 type ParamList = {
   bookBenefits: {title: string};
@@ -12,14 +13,17 @@ export const Book: React.FC<{
   bookName: string;
   benefitsCount: number;
 }> = ({bookCover, bookName, benefitsCount}) => {
+  const isRTL = useRTL();
+
   const navigation = useNavigation<NavigationProp<ParamList>>();
 
   const [showDefaultBookCover] = useState(!bookCover);
 
-  const styles = useMemo(() => getStyles(), []);
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       onPress={() =>
         navigation.navigate('bookBenefits', {title: 'ثلاثية غرناطة'})
       }
@@ -68,7 +72,7 @@ export const Book: React.FC<{
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     mainContainer: {
       width: '47.5%',
@@ -96,7 +100,7 @@ const getStyles = () => {
       alignItems: 'center',
       position: 'absolute',
       top: 10,
-      left: 5,
+      [isRTL ? 'right' : 'left']: 7.5,
       width: 20,
       height: 25,
     },
@@ -108,13 +112,13 @@ const getStyles = () => {
       fontFamily: 'ElMessiri-Bold',
       fontSize: 13,
       color: colors.primaryBlack,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
     },
     benefitsCountStyle: {
       fontFamily: 'ElMessiri-SemiBold',
       fontSize: 11,
       color: colors.lightTextGrey,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
       marginTop: 3,
     },
   });

@@ -14,6 +14,7 @@ const colors = {
   lighterGrey: '#DDDDDD',
   lightTextGrey: '#999999',
   transparentWhite: 'rgba(255, 255, 255, 0.35)',
+  black: '#000',
 };
 
 export default colors;

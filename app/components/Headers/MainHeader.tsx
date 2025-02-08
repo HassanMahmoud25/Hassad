@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import colors from '../../configs/colors';
+import {useRTL} from '../../contexts/RTLProvider';
 
 interface MainHeaderProps {
   title: string;
@@ -13,13 +14,14 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
   showBackIcon,
   showSearchIcon,
 }) => {
-  const styles = useMemo(() => getStyles(), []);
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.innerContainer}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity activeOpacity={0.5} style={styles.iconContainer}>
           {!!showBackIcon && (
             <Image
               source={require('../../assets/icons/Arrow_black.png')}
@@ -41,7 +43,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     mainContainer: {
       paddingTop: 30,
@@ -63,13 +65,14 @@ const getStyles = () => {
     },
     iconContainer: {
       position: 'absolute',
-      right: 0,
+      [isRTL ? 'left' : 'right']: 0,
       paddingHorizontal: 5,
       paddingVertical: 5,
     },
     headerBackIcon: {
       width: 9,
       height: 16,
+      transform: [{scaleX : isRTL ? 1 : -1}]
     },
     headerSearchIcon: {
       width: 24,

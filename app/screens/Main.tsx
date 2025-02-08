@@ -12,15 +12,15 @@ import {AddComponent} from '../components/AddComponent';
 
 export const MainScreen = () => {
   const {t} = useTranslation();
+  
   const dimensions = useWindowDimensions();
+  
   const isRTL = useRTL();
+  
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   const [index] = useState<number>(0);
-  // const [routes] = useState<{key: string; title: string}[]>([
-  //   {key: 'books', title: t('books')},
-  //   {key: 'folders', title: t('folders')},
-  // ]);
+
   const routes = useMemo(
     () => [
       {key: 'books', title: t('books')},
@@ -28,6 +28,7 @@ export const MainScreen = () => {
     ],
     [t],
   );
+  
   const routesToRender = isRTL ? routes : [...routes].reverse();
 
   interface SceneProps {
@@ -125,6 +126,7 @@ const getStyles = (isRTL: boolean) => {
     },
     addBtnStyle: {
       [isRTL ? 'left' : 'right']: '3.75%',
+      bottom: 50,
     },
   });
 };
