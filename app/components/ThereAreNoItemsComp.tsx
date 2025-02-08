@@ -39,7 +39,7 @@ const getStyles = () => {
       alignSelf: 'center',
     },
     imageStyle: {
-      maxWidth: 400,
+      maxWidth: "100%",
       height: 300,
     },
     textStyle: {

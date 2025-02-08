@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import colors from '../../configs/colors';
+import {useRTL} from '../../contexts/RTLProvider';
 
 type ConfirmationModalProps = {
   visible: boolean;
@@ -21,6 +22,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   confirmText = 'تأكيد',
   cancelText = 'إلغاء',
 }) => {
+  const isRTL = useRTL();
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
+
   return (
     <Modal
       transparent
@@ -53,66 +57,68 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    width: '92.5%',
-    backgroundColor: colors.white,
-    borderRadius: 23,
-    paddingHorizontal: 35,
-    paddingVertical: 30,
-    alignItems: 'center',
-    gap: 10,
-  },
-  title: {
-    fontFamily: 'ElMessiri-Bold',
-    fontSize: 18,
-    lineHeight: 32,
-    textAlign: 'center',
-    color: colors.primaryBlack,
-  },
-  contentContainer: {
-    width: '100%',
-    alignItems: 'center',
-    gap: 20,
-  },
-  message: {
-    fontFamily: 'ElMessiri-Regular',
-    fontSize: 16,
-    lineHeight: 30,
-    textAlign: 'center',
-    color: colors.primaryBlack,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  button: {
-    width: '47.5%',
-    height: 45,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cancelButton: {
-    backgroundColor: colors.primaryMove,
-  },
-  confirmButton: {
-    backgroundColor: colors.lightRed,
-  },
-  btnText: {
-    fontFamily: 'ElMessiri-Regular',
-    color: colors.white,
-    fontSize: 20,
-    lineHeight: 32,
-    textAlign: 'center',
-  },
-});
+const getStyles = (isRTL: boolean) => {
+  return StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    modalContainer: {
+      width: '92.5%',
+      backgroundColor: colors.white,
+      borderRadius: 23,
+      paddingHorizontal: 35,
+      paddingVertical: 30,
+      alignItems: 'center',
+      gap: 10,
+    },
+    title: {
+      fontFamily: 'ElMessiri-Bold',
+      fontSize: 18,
+      lineHeight: 32,
+      textAlign: 'center',
+      color: colors.primaryBlack,
+    },
+    contentContainer: {
+      width: '100%',
+      alignItems: 'center',
+      gap: 20,
+    },
+    message: {
+      fontFamily: 'ElMessiri-Regular',
+      fontSize: 16,
+      lineHeight: 30,
+      textAlign: 'center',
+      color: colors.primaryBlack,
+    },
+    buttonContainer: {
+      flexDirection: isRTL ? 'row' : 'row-reverse',
+      justifyContent: 'space-between',
+      width: '100%',
+    },
+    button: {
+      width: '47.5%',
+      height: 45,
+      borderRadius: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    cancelButton: {
+      backgroundColor: colors.primaryMove,
+    },
+    confirmButton: {
+      backgroundColor: colors.lightRed,
+    },
+    btnText: {
+      fontFamily: 'ElMessiri-Regular',
+      color: colors.white,
+      fontSize: 20,
+      lineHeight: 32,
+      textAlign: 'center',
+    },
+  });
+};
 
 export default ConfirmationModal;

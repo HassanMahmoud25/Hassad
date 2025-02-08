@@ -15,12 +15,15 @@ import colors from '../configs/colors';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {AddComponent} from '../components/AddComponent';
 import {Book} from '../components/Book';
+import { useRTL } from '../contexts/RTLProvider';
 
 type ParamList = {
   BookBenefitsScreen: {title: string};
 };
 
 export const FolderBooks = () => {
+  const isRTL = useRTL();
+
   const [books] = useState([
     {
       key: 1,
@@ -73,7 +76,7 @@ export const FolderBooks = () => {
 
   const navigation = useNavigation();
 
-  const styles = useMemo(() => getStyles(), []);
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -128,7 +131,7 @@ export const FolderBooks = () => {
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -149,7 +152,7 @@ const getStyles = () => {
     searchContainer: {
       width: '100%',
       height: 55,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       backgroundColor: colors.white,
       borderRadius: 20,
@@ -164,13 +167,13 @@ const getStyles = () => {
       height: '100%',
       fontFamily: 'Tajawal-Medium',
       fontSize: 18,
-      textAlign: 'right',
+      textAlign: isRTL ? 'right' : 'left',
       lineHeight: 30,
     },
     filterAndBooksCount: {
       paddingTop: 15,
       paddingBottom: 10,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
@@ -187,13 +190,14 @@ const getStyles = () => {
     booksContainer: {
       marginBottom: 40,
       marginTop: 15,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       flexWrap: 'wrap',
       columnGap: '5%',
       rowGap: 20,
     },
     addBtnStyle: {
-      right: 0,
+      [isRTL ? 'left' : 'right']: 0,
+      bottom: 80,
     },
   });
 };

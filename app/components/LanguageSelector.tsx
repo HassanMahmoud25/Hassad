@@ -84,7 +84,6 @@ const getStyles = (isRTL: boolean) => {
       fontFamily: 'ElMessiri-Medium',
       fontSize: 16,
       color: colors.labelText,
-      marginRight: 10,
     },
     switchContainer: {
       flexDirection: 'row',

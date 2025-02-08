@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useRTL} from '../contexts/RTLProvider';
 
 type ParamList = {
   // screen name: params passed to the screen
@@ -15,6 +16,8 @@ export const Benefit: React.FC<{
   benefitImg?: any;
   pageNumber: number;
   bgColor: string;
+  borderColor?: string;
+  isFavorite?: boolean;
 }> = ({
   benefitTitle,
   benefitDate,
@@ -22,20 +25,32 @@ export const Benefit: React.FC<{
   benefitImg,
   pageNumber,
   bgColor,
+  borderColor,
+  isFavorite,
 }) => {
   const navigation = useNavigation<NavigationProp<ParamList>>();
 
-  const styles = useMemo(() => getStyles(), []);
+  const isRTL = useRTL();
+
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   return (
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={() => navigation.navigate('benefitDetails')}
-      style={[styles.benefitContainer, {backgroundColor: bgColor}]}>
+      style={[
+        styles.benefitContainer,
+        {backgroundColor: bgColor},
+        isFavorite && {
+          borderWidth: 2,
+          borderColor: borderColor,
+          [isRTL ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
+        },
+      ]}>
       <View style={styles.benefitHeaderContainer}>
         <Text
           numberOfLines={1}
-          ellipsizeMode="tail"
+          ellipsizeMode={isRTL ? 'tail' : 'head'}
           style={styles.benefitTitle}>
           {benefitTitle}
         </Text>
@@ -71,14 +86,15 @@ export const Benefit: React.FC<{
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     benefitContainer: {
       borderRadius: 25,
       padding: 25,
+      width: '100%',
     },
     benefitHeaderContainer: {
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: 10,
@@ -88,7 +104,7 @@ const getStyles = () => {
       fontSize: 18,
       color: colors.primaryBlack,
       width: '75%',
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
     },
     benefitDate: {
       fontFamily: 'ElMessiri-Medium',
@@ -98,7 +114,7 @@ const getStyles = () => {
     benefitBodyContent: {
       borderRightColor: colors.dimmed,
       borderRightWidth: 1,
-      paddingRight: 10,
+      paddingLeft: 10,
       paddingVertical: 5,
       gap: 10,
     },
@@ -106,7 +122,7 @@ const getStyles = () => {
       fontFamily: 'Tajawal-Regular',
       fontSize: 17,
       color: colors.labelText,
-      textAlign: 'right',
+      textAlign: isRTL ? 'left' : 'right',
       lineHeight: 26,
     },
     imgContainer: {
@@ -119,7 +135,7 @@ const getStyles = () => {
     },
     pageNumberContainer: {
       marginTop: 10,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       justifyContent: 'space-between',
       alignItems: 'center',
     },

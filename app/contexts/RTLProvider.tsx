@@ -43,7 +43,6 @@ export const RTLProvider = ({children}: RTLProviderProps) => {
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <RTLContext.Provider value={isRTL}>{children}</RTLContext.Provider>;

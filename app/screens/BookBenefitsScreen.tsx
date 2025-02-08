@@ -15,12 +15,15 @@ import colors from '../configs/colors';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Benefit} from '../components/Benefit';
 import {AddComponent} from '../components/AddComponent';
+import {useRTL} from '../contexts/RTLProvider';
 
 type ParamList = {
   BookBenefitsScreen: {title: string};
 };
 
 export const BookBenefitsScreen = () => {
+  const isRTL = useRTL();
+
   const [benefits] = useState([
     {
       key: 1,
@@ -46,7 +49,7 @@ export const BookBenefitsScreen = () => {
       benefitDate: '11/3/2023',
       benefitImg: require('../assets/images/benefitScreen.png'),
       pageNumber: 210,
-      bgColor: '#DBE9FE',
+      bgColor: '#F7DEE4',
     },
     {
       key: 4,
@@ -65,7 +68,7 @@ export const BookBenefitsScreen = () => {
 
   const navigation = useNavigation();
 
-  const styles = useMemo(() => getStyles(), []);
+  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -93,7 +96,10 @@ export const BookBenefitsScreen = () => {
         </View>
 
         <View style={styles.filterAndBenefitsCount}>
-          <Text style={styles.benefitsCount}>{'عدد الفوائد :  0'}</Text>
+          <Text
+            style={
+              styles.benefitsCount
+            }>{`عدد الفوائد :  ${benefits.length}`}</Text>
           <Image
             source={require('../assets/icons/filterIcon.png')}
             resizeMode="contain"
@@ -122,7 +128,7 @@ export const BookBenefitsScreen = () => {
   );
 };
 
-const getStyles = () => {
+const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -143,7 +149,7 @@ const getStyles = () => {
     searchContainer: {
       width: '100%',
       height: 55,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       backgroundColor: colors.white,
       borderRadius: 20,
@@ -164,7 +170,7 @@ const getStyles = () => {
     filterAndBenefitsCount: {
       paddingTop: 15,
       paddingBottom: 10,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
@@ -185,7 +191,8 @@ const getStyles = () => {
       marginTop: 15,
     },
     addBtnStyle: {
-      right: 0,
+      [isRTL ? 'left' : 'right']: 0,
+      bottom: 80,
     },
   });
 };

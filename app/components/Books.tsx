@@ -1,52 +1,45 @@
-import React, {useMemo, useState} from 'react';
-import {Image, ScrollView, Text, View, StyleSheet} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
+import {
+  Image,
+  ScrollView,
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {ThereAreNoItemsComp} from './ThereAreNoItemsComp';
 import colors from '../configs/colors';
 import {useTranslation} from 'react-i18next';
 import {useRTL} from '../contexts/RTLProvider';
 import {Book} from './Book';
+import {getBooks} from '../services/booksService';
 
 export const Books = () => {
   const {t} = useTranslation();
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
-  const [books] = useState<
-    {key: number; bookCover?: any; bookName: string; benefitsCount: number}[]
-  >([
-    {
-      key: 1,
-      bookName: 'ثلاثية غرناطة ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 2,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 3,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 4,
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 5,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 6,
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-  ]);
+  const [books, setBooks] = useState<
+    {_id: number; bookCover?: any; name: string; num_of_benefits: number}[]
+  >([]);
+  const [loadingBooks, setLoadingBooks] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        setLoadingBooks(true);
+        const token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
+        const books = await getBooks(token);
+        setBooks(books);
+      } catch (err) {
+        console.log('fetchBooks ERROR ==> ', err);
+      } finally {
+        setLoadingBooks(false);
+      }
+    };
+    
+    fetchBooks();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -54,7 +47,6 @@ export const Books = () => {
         <Text style={styles.folderCount}>
           {t('books count', {count: books.length})}
         </Text>
-
         <Image
           source={require('../assets/icons/filterIcon.png')}
           resizeMode="contain"
@@ -63,23 +55,31 @@ export const Books = () => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {books.length > 0 ? (
-          <View style={styles.booksContainer}>
-            {books.map(book => (
-              <Book
-                key={book.key}
-                bookCover={book.bookCover}
-                bookName={book.bookName}
-                benefitsCount={book.benefitsCount}
-              />
-            ))}
+        {loadingBooks ? (
+          <View style={styles.indicatorStyle}>
+            <ActivityIndicator size={50} color={colors.primaryMove} />
           </View>
         ) : (
-          <ThereAreNoItemsComp
-            imageSrc={require('../assets/images/thereAreNoBooks.png')}
-            text="لا يوجد كتب هيا نبدأ!"
-            subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ كتاباً"
-          />
+          <>
+            {books.length > 0 ? (
+              <View style={styles.booksContainer}>
+                {books.map(book => (
+                  <Book
+                    key={book._id}
+                    bookCover={book.bookCover}
+                    bookName={book.name}
+                    benefitsCount={book.num_of_benefits}
+                  />
+                ))}
+              </View>
+            ) : (
+              <ThereAreNoItemsComp
+                imageSrc={require('../assets/images/thereAreNoBooks.png')}
+                text="لا يوجد كتب هيا نبدأ!"
+                subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ كتاباً"
+              />
+            )}
+          </>
         )}
       </ScrollView>
     </View>
@@ -113,11 +113,14 @@ const getStyles = (isRTL: boolean) => {
       flex: 1,
       width: '100%',
       marginTop: 10,
-      flexDirection: 'row-reverse',
+      flexDirection: isRTL ? 'row' : 'row-reverse',
       flexWrap: 'wrap',
       columnGap: '5%',
       rowGap: 20,
       marginBottom: 35,
+    },
+    indicatorStyle: {
+      top: 150,
     },
   });
 };
