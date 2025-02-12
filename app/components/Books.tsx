@@ -19,7 +19,7 @@ export const Books = () => {
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
   const [books, setBooks] = useState<
-    {_id: number; bookCover?: any; name: string; num_of_benefits: number}[]
+    {_id: number; image?: any; name: string; num_of_benefits: number}[]
   >([]);
   const [loadingBooks, setLoadingBooks] = useState<boolean>(true);
 
@@ -66,7 +66,7 @@ export const Books = () => {
                 {books.map(book => (
                   <Book
                     key={book._id}
-                    bookCover={book.bookCover}
+                    bookCover={book.image}
                     bookName={book.name}
                     benefitsCount={book.num_of_benefits}
                   />

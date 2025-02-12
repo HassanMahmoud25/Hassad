@@ -28,13 +28,13 @@ export const FavoriteScreen = () => {
     {
       _id: number;
       name: string;
-      createdAt: string;
       content?: string;
       benefitImg?: any;
       page_number: number;
       color: string;
-      borderColor: string;
+      border_color: string;
       isFavorite: boolean;
+      createdAt: string;
     }[]
   >([]);
   const [loadingFavorites, setLoadingFavorites] = useState<boolean>(true);
@@ -105,7 +105,7 @@ export const FavoriteScreen = () => {
                     benefitImg={favorite.benefitImg}
                     pageNumber={favorite.page_number}
                     bgColor={favorite.color}
-                    borderColor={'brown'}
+                    borderColor={favorite.border_color}
                     isFavorite={true}
                   />
                 ))}
