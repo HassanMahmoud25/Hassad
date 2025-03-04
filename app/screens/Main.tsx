@@ -12,11 +12,11 @@ import {AddComponent} from '../components/AddComponent';
 
 export const MainScreen = () => {
   const {t} = useTranslation();
-  
+
   const dimensions = useWindowDimensions();
-  
+
   const isRTL = useRTL();
-  
+
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
   const [index] = useState<number>(0);
@@ -28,7 +28,7 @@ export const MainScreen = () => {
     ],
     [t],
   );
-  
+
   const routesToRender = isRTL ? routes : [...routes].reverse();
 
   interface SceneProps {
@@ -48,7 +48,13 @@ export const MainScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <MainHeader title={t('home page')} showSearchIcon={true} />
+      <MainHeader
+        title={t('home page')}
+        showSearchIcon={true}
+        onPressHandler={() => {
+          return true;
+        }}
+      />
 
       <TabView
         navigationState={{index, routes: routesToRender}}
@@ -100,7 +106,7 @@ const getStyles = (isRTL: boolean) => {
       backgroundColor: colors.white,
       justifyContent: 'space-between',
       marginTop: 10,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
     },
     indicator: {
@@ -125,7 +131,7 @@ const getStyles = (isRTL: boolean) => {
       color: colors.white,
     },
     addBtnStyle: {
-      [isRTL ? 'left' : 'right']: '3.75%',
+      [isRTL ? 'left' : 'right']: '5%',
       bottom: 50,
     },
   });

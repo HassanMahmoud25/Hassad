@@ -35,11 +35,11 @@ const getStyles = () => {
       paddingVertical: 10,
     },
     textContainer: {
-      width: '70%',
+      width: '75%',
       alignSelf: 'center',
     },
     imageStyle: {
-      maxWidth: "100%",
+      maxWidth: '100%',
       height: 300,
     },
     textStyle: {
@@ -47,7 +47,6 @@ const getStyles = () => {
       fontSize: 24,
       color: colors.primaryBlack,
       textAlign: 'center',
-      marginTop: 10,
       lineHeight: 36,
     },
     subTextStyle: {

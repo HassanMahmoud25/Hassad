@@ -6,19 +6,35 @@ import {useRTL} from '../contexts/RTLProvider';
 
 type ParamList = {
   // screen name: params passed to the screen
-  benefitDetails: undefined;
+  benefitDetails: {
+    benefit: {
+      id: string;
+      bookId: string;
+      benefitTitle: string;
+      benefitDate: string;
+      benefitContent?: string;
+      benefitImg?: string;
+      pageNumber: number;
+      bgColor: string;
+      isFavorite?: boolean;
+    };
+  };
 };
 
 export const Benefit: React.FC<{
+  id: string;
+  bookId: string;
   benefitTitle: string;
   benefitDate: string;
   benefitContent?: string;
-  benefitImg?: any;
+  benefitImg?: string;
   pageNumber: number;
   bgColor: string;
   borderColor?: string;
   isFavorite?: boolean;
 }> = ({
+  id,
+  bookId,
   benefitTitle,
   benefitDate,
   benefitContent,
@@ -37,7 +53,21 @@ export const Benefit: React.FC<{
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={() => navigation.navigate('benefitDetails')}
+      onPress={() =>
+        navigation.navigate('benefitDetails', {
+          benefit: {
+            id,
+            bookId,
+            benefitTitle,
+            benefitDate,
+            benefitContent,
+            benefitImg,
+            pageNumber,
+            bgColor,
+            isFavorite,
+          },
+        })
+      }
       style={[
         styles.benefitContainer,
         {backgroundColor: bgColor},
@@ -70,7 +100,7 @@ export const Benefit: React.FC<{
         {!!benefitImg && (
           <View style={styles.imgContainer}>
             <Image
-              source={benefitImg}
+              source={{uri: benefitImg}}
               resizeMode="cover"
               style={styles.benefitImgStyle}
             />

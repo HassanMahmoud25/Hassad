@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   BackHandler,
   SafeAreaView,
@@ -9,77 +9,98 @@ import {
   View,
   Text,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import colors from '../configs/colors';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {Benefit} from '../components/Benefit';
 import {AddComponent} from '../components/AddComponent';
 import {useRTL} from '../contexts/RTLProvider';
+import {getBookBenefits} from '../services/benefitsService';
+import {formatDate} from '../utils/formatDate';
+import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
 
 type ParamList = {
-  BookBenefitsScreen: {title: string};
+  BookBenefitsScreen: {title: string; id: string};
 };
 
 export const BookBenefitsScreen = () => {
   const isRTL = useRTL();
 
-  const [benefits] = useState([
+  const [loadingBenefits, setLoadingBenefits] = useState<boolean>(true);
+  const [benefits, setBenefits] = useState<
     {
-      key: 1,
-      benefitTitle: 'ثلاثية غرناطة غرناطة ثلاثية غرناطة',
-      benefitDate: '11/3/2023',
-      benefitContent:
-        'ثلاثية غرناطة هي ثلاثية روائية تتكون ثلاثية غرناطة هي ثلاثية روائية تتكون ثلاثية غرناطة هي ثلاثية روائية تتكون ثلاثية غرناطة هي ثلاثية روائية تتكون',
-      benefitImg: require('../assets/images/benefitScreen.png'),
-      pageNumber: 210,
-      bgColor: '#D7F6E5',
-    },
-    {
-      key: 2,
-      benefitTitle: 'ثلاثية غرناطة',
-      benefitDate: '11/3/2023',
-      benefitContent: 'ثلاثية غرناطة هي ثلاثية روائية تتكون',
-      pageNumber: 210,
-      bgColor: '#EFE9F5',
-    },
-    {
-      key: 3,
-      benefitTitle: 'ثلاثية غرناطة',
-      benefitDate: '11/3/2023',
-      benefitImg: require('../assets/images/benefitScreen.png'),
-      pageNumber: 210,
-      bgColor: '#F7DEE4',
-    },
-    {
-      key: 4,
-      benefitTitle: 'ثلاثية غرناطة غرناطة ثلاثية غرناطة',
-      benefitDate: '11/3/2023',
-      benefitContent:
-        'ثلاثية غرناطة هي ثلاثية روائية تتكون ثلاثية غرناطة هي ثلاثية روائية تتكون ثلاثية غرناطة هي ثلاثية روائية تتكون ثلاثية غرناطة هي ثلاثية روائية تتكون',
-      benefitImg: require('../assets/images/benefitScreen.png'),
-      pageNumber: 210,
-      bgColor: '#D7F6E5',
-    },
-  ]);
+      _id: string;
+      book: string;
+      name: string;
+      content: string;
+      page_number: number;
+      img_url: string;
+      favourated: boolean;
+      color: string;
+      border_color: string;
+      createdAt: string;
+    }[]
+  >([]);
 
   const route = useRoute<RouteProp<ParamList, 'BookBenefitsScreen'>>();
-  const {title} = route.params;
+
+  const {title, id} = route.params;
 
   const navigation = useNavigation();
 
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
+  const BackHandlerMethod = () => {
+    navigation.goBack();
+    return true;
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchBookBenefits = async () => {
+        try {
+          setLoadingBenefits(true);
+          console.log('*********** refresh Book Benefits Screen ***********');
+          const token =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
+          const benefits = await getBookBenefits(id, token);
+          setBenefits(benefits);
+        } catch (err) {
+          console.log('fetchBookBenefits ERROR ====> ', err);
+        } finally {
+          setLoadingBenefits(false);
+        }
+      };
+
+      fetchBookBenefits();
+    }, []),
+  );
+
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      navigation.goBack();
-      return true;
-    });
+    const backHandlerObj = BackHandler.addEventListener(
+      'hardwareBackPress',
+      BackHandlerMethod,
+    );
+
+    return () => {
+      backHandlerObj.remove();
+    };
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <MainHeader title={title} showBackIcon={true} />
+      <MainHeader
+        title={title}
+        showBackIcon={true}
+        onPressHandler={BackHandlerMethod}
+      />
       <View style={styles.contentContainer}>
         <View style={styles.searchContainer}>
           <TouchableOpacity style={styles.searchBtnStyle}>
@@ -107,19 +128,36 @@ export const BookBenefitsScreen = () => {
           />
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.benefitsContainer}>
-            {benefits.map(benefit => (
-              <Benefit
-                key={benefit.key}
-                benefitTitle={benefit.benefitTitle}
-                benefitDate={benefit.benefitDate}
-                benefitContent={benefit.benefitContent}
-                benefitImg={benefit.benefitImg}
-                pageNumber={benefit.pageNumber}
-                bgColor={benefit.bgColor}
-              />
-            ))}
-          </View>
+          {loadingBenefits ? (
+            <View style={styles.indicatorStyle}>
+              <ActivityIndicator size={50} color={colors.primaryMove} />
+            </View>
+          ) : benefits.length > 0 ? (
+            <View style={styles.benefitsContainer}>
+              {benefits.map(benefit => (
+                <Benefit
+                  key={benefit._id}
+                  id={benefit._id}
+                  bookId={benefit.book}
+                  benefitTitle={benefit.name}
+                  benefitDate={formatDate(benefit.createdAt)}
+                  benefitContent={benefit.content}
+                  benefitImg={benefit.img_url}
+                  pageNumber={benefit.page_number}
+                  isFavorite={benefit.favourated}
+                  bgColor={benefit.color}
+                  borderColor={benefit.border_color}
+                />
+              ))}
+            </View>
+          ) : (
+            <ThereAreNoItemsComp
+              imageSrc={require('../assets/images/thereAreNoBenefits.png')}
+              text="ليس لديك فوائد
+أضف ما حصدت من كتابك!"
+              subText="انقر الأيقونة بالأسفل لإضافة فائدة"
+            />
+          )}
         </ScrollView>
 
         <AddComponent positionStyle={styles.addBtnStyle} />
@@ -136,7 +174,7 @@ const getStyles = (isRTL: boolean) => {
     },
     contentContainer: {
       flex: 1,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
       marginTop: 15,
     },
@@ -185,7 +223,7 @@ const getStyles = (isRTL: boolean) => {
       height: 17,
     },
     benefitsContainer: {
-      gap: 20,
+      gap: 15,
       flex: 1,
       marginBottom: 40,
       marginTop: 15,
@@ -193,6 +231,9 @@ const getStyles = (isRTL: boolean) => {
     addBtnStyle: {
       [isRTL ? 'left' : 'right']: 0,
       bottom: 80,
+    },
+    indicatorStyle: {
+      top: 200,
     },
   });
 };

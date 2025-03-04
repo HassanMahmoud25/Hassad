@@ -122,7 +122,7 @@ const getStyles = (isRTL: boolean) => {
       backgroundColor: colors.white,
       top: -80,
       marginBottom: -70,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
       borderRadius: 12,
       padding: 20,
@@ -172,7 +172,7 @@ const getStyles = (isRTL: boolean) => {
       borderRightColor: colors.lighterGrey,
     },
     formContainer: {
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
       marginTop: 10,
     },
@@ -232,7 +232,7 @@ const getStyles = (isRTL: boolean) => {
     },
     saveButton: {
       backgroundColor: colors.dimmed,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
       marginTop: 30,
       borderRadius: 18,

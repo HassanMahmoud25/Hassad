@@ -2,16 +2,17 @@ import React, {useMemo} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import { useRTL } from '../contexts/RTLProvider';
+import {useRTL} from '../contexts/RTLProvider';
 
 type ParamList = {
-  folderBooks: {title: string};
+  folderBooks: {title: string; id: string};
 };
 
 export const Folder: React.FC<{
+  folderId: string;
   folderName: string;
   booksCount: number;
-}> = ({folderName, booksCount}) => {
+}> = ({folderId, folderName, booksCount}) => {
   const isRTL = useRTL();
 
   const navigation = useNavigation<NavigationProp<ParamList>>();
@@ -22,7 +23,7 @@ export const Folder: React.FC<{
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={() => {
-        navigation.navigate('folderBooks', {title: 'كتب علمية'});
+        navigation.navigate('folderBooks', {title: folderName, id: folderId});
       }}
       style={styles.mainContainer}>
       <View style={styles.folderCoverContainer}>

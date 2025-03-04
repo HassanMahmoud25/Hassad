@@ -5,14 +5,15 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useRTL} from '../contexts/RTLProvider';
 
 type ParamList = {
-  bookBenefits: {title: string};
+  bookBenefits: {title: string; id: string};
 };
 
 export const Book: React.FC<{
-  bookCover?: any;
+  bookId: string;
+  bookCover?: string;
   bookName: string;
   benefitsCount: number;
-}> = ({bookCover, bookName, benefitsCount}) => {
+}> = ({bookId, bookCover, bookName, benefitsCount}) => {
   const isRTL = useRTL();
 
   const navigation = useNavigation<NavigationProp<ParamList>>();
@@ -25,7 +26,7 @@ export const Book: React.FC<{
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={() =>
-        navigation.navigate('bookBenefits', {title: 'ثلاثية غرناطة'})
+        navigation.navigate('bookBenefits', {title: bookName, id: bookId})
       }
       style={styles.mainContainer}>
       <View
@@ -45,7 +46,7 @@ export const Book: React.FC<{
           />
         ) : (
           <Image
-            source={bookCover}
+            source={{uri: bookCover}}
             resizeMode="contain"
             style={styles.bookCoverStyle}
           />

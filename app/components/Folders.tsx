@@ -19,7 +19,7 @@ export const Folders = () => {
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
   const [folders, setFolders] = useState<
-    {_id: number; name: string; num_of_books: number}[]
+    {_id: string; name: string; num_of_books: number}[]
   >([]);
   const [loadingFolders, setLoadingFolders] = useState<boolean>(true);
 
@@ -66,6 +66,7 @@ export const Folders = () => {
                 {folders.map(folder => (
                   <Folder
                     key={folder._id}
+                    folderId={folder._id}
                     folderName={folder.name}
                     booksCount={folder.num_of_books}
                   />
@@ -89,7 +90,7 @@ const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: '3.75%',
+      paddingHorizontal: '5%',
     },
     headerContainer: {
       marginTop: 15,
