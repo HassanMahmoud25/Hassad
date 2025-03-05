@@ -67,6 +67,7 @@ const getStyles = (isRTL: boolean) => {
       textAlign: 'center',
       fontFamily: 'ElMessiri-Bold',
       color: colors.primaryBlack,
+      width: "85%"
     },
     iconContainer: {
       position: 'absolute',

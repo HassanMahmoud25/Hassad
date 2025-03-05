@@ -82,7 +82,7 @@ export const FavoriteScreen = () => {
           />
         </TouchableOpacity>
         <TextInput
-          placeholder="ابحث عن فائدة"
+          placeholder={t("searchForBenefit")}
           style={styles.searchInputField}
         />
       </View>

@@ -13,6 +13,7 @@ import ConfirmationModal from '../components/Modals/Confirmation';
 import {useRTL} from '../contexts/RTLProvider';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {deleteBenefit} from '../services/benefitsService';
+import { t } from 'i18next';
 
 type ParamList = {
   BookDetails: {
@@ -122,7 +123,7 @@ export const BenefitDetails = () => {
             <Text
               style={
                 styles.pageNumberText
-              }>{`رقم الصفحة :  ${pageNumber}`}</Text>
+              }>{`${t("pageNumber")} : ${pageNumber}`}</Text>
           </View>
         </View>
       </ScrollView>

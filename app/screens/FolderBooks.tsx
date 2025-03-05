@@ -19,6 +19,8 @@ import {Book} from '../components/Book';
 import {useRTL} from '../contexts/RTLProvider';
 import {getFolderBooks} from '../services/foldersService';
 import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
+import AddItemModal from '../components/Modals/AddItemModal';
+import {t} from 'i18next';
 
 type ParamList = {
   BookBenefitsScreen: {title: string; id: string};
@@ -27,6 +29,7 @@ type ParamList = {
 export const FolderBooks = () => {
   const isRTL = useRTL();
 
+  const [showAddItemModal, setShowAddItemModal] = useState<boolean>(false);
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [books, setBooks] = useState<
     {
@@ -51,21 +54,21 @@ export const FolderBooks = () => {
 
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
-  useEffect(() => {
-    const fetchFolderBooks = async () => {
-      try {
-        setLoadingBooks(true);
-        const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-        const folderBooks = await getFolderBooks(id, token);
-        setBooks(folderBooks);
-      } catch (err) {
-        console.log('fetchFolderBooks ERROR ==> ', err);
-      } finally {
-        setLoadingBooks(false);
-      }
-    };
+  const fetchFolderBooks = async () => {
+    try {
+      setLoadingBooks(true);
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
+      const folderBooks = await getFolderBooks(id, token);
+      setBooks(folderBooks);
+    } catch (err) {
+      console.log('fetchFolderBooks ERROR ==> ', err);
+    } finally {
+      setLoadingBooks(false);
+    }
+  };
 
+  useEffect(() => {
     fetchFolderBooks();
 
     const backHandlerObj = BackHandler.addEventListener(
@@ -78,6 +81,14 @@ export const FolderBooks = () => {
     };
   }, []);
 
+  const handleClickAddBtn = () => {
+    setShowAddItemModal(true);
+  };
+
+  const closeAddItemModal = () => {
+    setShowAddItemModal(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <MainHeader
@@ -85,6 +96,15 @@ export const FolderBooks = () => {
         showBackIcon={true}
         onPressHandler={backPresshandler}
       />
+
+      <AddItemModal
+        visible={showAddItemModal}
+        type={'books'}
+        folderId={id}
+        onRefresh={fetchFolderBooks}
+        onCancel={closeAddItemModal}
+      />
+
       <View style={styles.contentContainer}>
         <View style={styles.searchContainer}>
           <TouchableOpacity style={styles.searchBtnStyle}>
@@ -95,14 +115,15 @@ export const FolderBooks = () => {
             />
           </TouchableOpacity>
           <TextInput
-            placeholder="ابحث عن كتاب"
+            placeholder={t('searchForBook')}
             style={styles.searchInputField}
           />
         </View>
 
         <View style={styles.filterAndBooksCount}>
-          <Text
-            style={styles.booksCount}>{`عدد الكتب :  ${books.length}`}</Text>
+          <Text style={styles.booksCount}>{`${t('booksCount')} : ${
+            books.length
+          }`}</Text>
           <Image
             source={require('../assets/icons/filterIcon.png')}
             resizeMode="contain"
@@ -130,14 +151,16 @@ export const FolderBooks = () => {
           ) : (
             <ThereAreNoItemsComp
               imageSrc={require('../assets/images/folderIsEmpty.png')}
-              text="المجلد فارغ
-هيا لنملئه بالكتب!"
-              subText="ابدأ التجربة وانقر الأيقونة بالأسفل وأنشئ كتاباً"
+              text={t('folderIsEmptyLetsAddBooksToIt')}
+              subText={t('StartTheExperienceClickTheIconBelowAndCreateBook')}
             />
           )}
         </ScrollView>
 
-        <AddComponent positionStyle={styles.addBtnStyle} />
+        <AddComponent
+          onPress={handleClickAddBtn}
+          positionStyle={styles.addBtnStyle}
+        />
       </View>
     </SafeAreaView>
   );

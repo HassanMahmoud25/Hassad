@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useRTL} from '../contexts/RTLProvider';
+import { t } from 'i18next';
 
 type ParamList = {
   folderBooks: {title: string; id: string};
@@ -47,7 +48,7 @@ export const Folder: React.FC<{
           style={styles.folderNameStyle}>
           {folderName}
         </Text>
-        <Text style={styles.booksCountStyle}>{`${booksCount} كتب`}</Text>
+        <Text style={styles.booksCountStyle}>{`${booksCount} ${t("books")}`}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -25,6 +25,7 @@ import {useRTL} from '../contexts/RTLProvider';
 import {getBookBenefits} from '../services/benefitsService';
 import {formatDate} from '../utils/formatDate';
 import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
+import {t} from 'i18next';
 
 type ParamList = {
   BookBenefitsScreen: {title: string; id: string};
@@ -111,16 +112,15 @@ export const BookBenefitsScreen = () => {
             />
           </TouchableOpacity>
           <TextInput
-            placeholder="ابحث عن فائدة"
+            placeholder={t('searchForBenefit')}
             style={styles.searchInputField}
           />
         </View>
 
         <View style={styles.filterAndBenefitsCount}>
-          <Text
-            style={
-              styles.benefitsCount
-            }>{`عدد الفوائد :  ${benefits.length}`}</Text>
+          <Text style={styles.benefitsCount}>{`${t('benefitsCount')} : ${
+            benefits.length
+          }`}</Text>
           <Image
             source={require('../assets/icons/filterIcon.png')}
             resizeMode="contain"
@@ -153,14 +153,13 @@ export const BookBenefitsScreen = () => {
           ) : (
             <ThereAreNoItemsComp
               imageSrc={require('../assets/images/thereAreNoBenefits.png')}
-              text="ليس لديك فوائد
-أضف ما حصدت من كتابك!"
-              subText="انقر الأيقونة بالأسفل لإضافة فائدة"
+              text={t('YouHaveNoBenefitsAddWhatYouVeGainedFromYourBook')}
+              subText={t('clickIconToAddBenefit')}
             />
           )}
         </ScrollView>
 
-        <AddComponent positionStyle={styles.addBtnStyle} />
+        <AddComponent onPress={() => {}} positionStyle={styles.addBtnStyle} />
       </View>
     </SafeAreaView>
   );

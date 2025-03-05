@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {SafeAreaView, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import {TabBar, TabView} from 'react-native-tab-view';
@@ -9,17 +9,20 @@ import colors from '../configs/colors';
 import {useTranslation} from 'react-i18next';
 import {useRTL} from '../contexts/RTLProvider';
 import {AddComponent} from '../components/AddComponent';
+import AddItemModal from '../components/Modals/AddItemModal';
 
 export const MainScreen = () => {
   const {t} = useTranslation();
 
   const dimensions = useWindowDimensions();
 
+  const indexRef = useRef<number>(0);
+
   const isRTL = useRTL();
 
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
-  const [index] = useState<number>(0);
+  const [showAddItemModal, setShowAddItemModal] = useState<boolean>(false);
 
   const routes = useMemo(
     () => [
@@ -46,6 +49,18 @@ export const MainScreen = () => {
     }
   };
 
+  const handleClickingAddBtn = () => {
+    setShowAddItemModal(true);
+  };
+
+  const closeAddItemModal = () => {
+    setShowAddItemModal(false);
+  };
+
+  const handleIndexChnage = (idx: number) => {
+    indexRef.current = idx;
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <MainHeader
@@ -56,10 +71,16 @@ export const MainScreen = () => {
         }}
       />
 
+      <AddItemModal
+        visible={showAddItemModal}
+        type={indexRef.current === 0 ? 'books' : 'folders'}
+        onCancel={closeAddItemModal}
+      />
+
       <TabView
-        navigationState={{index, routes: routesToRender}}
+        navigationState={{index: indexRef.current, routes: routesToRender}}
         renderScene={renderScene}
-        onIndexChange={() => {}}
+        onIndexChange={handleIndexChnage}
         initialLayout={{width: dimensions.width}}
         style={styles.container}
         renderTabBar={props => (
@@ -86,7 +107,10 @@ export const MainScreen = () => {
           ),
         }}
       />
-      <AddComponent positionStyle={styles.addBtnStyle} />
+      <AddComponent
+        onPress={handleClickingAddBtn}
+        positionStyle={styles.addBtnStyle}
+      />
     </SafeAreaView>
   );
 };

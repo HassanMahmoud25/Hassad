@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useRTL} from '../contexts/RTLProvider';
+import {t} from 'i18next';
 
 type ParamList = {
   bookBenefits: {title: string; id: string};
@@ -66,8 +67,9 @@ export const Book: React.FC<{
           style={styles.bookNameStyle}>
           {bookName}
         </Text>
-        <Text
-          style={styles.benefitsCountStyle}>{`${benefitsCount} فوائد`}</Text>
+        <Text style={styles.benefitsCountStyle}>{`${benefitsCount} ${t(
+          'benefits',
+        )}`}</Text>
       </View>
     </TouchableOpacity>
   );

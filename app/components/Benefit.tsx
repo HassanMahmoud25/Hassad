@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../configs/colors';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useRTL} from '../contexts/RTLProvider';
+import {t} from 'i18next';
 
 type ParamList = {
   // screen name: params passed to the screen
@@ -109,8 +110,9 @@ export const Benefit: React.FC<{
       </View>
 
       <View style={styles.pageNumberContainer}>
-        <Text
-          style={styles.pageNumberText}>{`رقم الصفحة :  ${pageNumber}`}</Text>
+        <Text style={styles.pageNumberText}>{`${t(
+          'pageNumber',
+        )} : ${pageNumber}`}</Text>
       </View>
     </TouchableOpacity>
   );
