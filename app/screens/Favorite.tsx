@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -15,21 +15,27 @@ import colors from '../configs/colors';
 import {useTranslation} from 'react-i18next';
 import {useRTL} from '../contexts/RTLProvider';
 import {Benefit} from '../components/Benefit';
-import {getBookBenefits} from '../services/benefitsService';
+import {getFavoriteBenefits} from '../services/favoritesService';
+import {formatDate} from '../utils/formatDate';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 export const FavoriteScreen = () => {
   const {t} = useTranslation();
 
   const isRTL = useRTL();
 
+  const navigation = useNavigation();
+
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
+  const [loadingFavorites, setLoadingFavorites] = useState<boolean>(true);
   const [favorites, setFavorites] = useState<
     {
-      _id: number;
+      _id: string;
+      book: string;
       name: string;
       content?: string;
-      benefitImg?: any;
+      img_url?: string;
       page_number: number;
       color: string;
       border_color: string;
@@ -37,53 +43,49 @@ export const FavoriteScreen = () => {
       createdAt: string;
     }[]
   >([]);
-  const [loadingFavorites, setLoadingFavorites] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        setLoadingFavorites(true);
-        const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-        const favorites = await getBookBenefits(token);
-        setFavorites(favorites);
-      } catch (err) {
-        console.log('getFavorites ERROR ==> ', err);
-      } finally {
-        setLoadingFavorites(false);
-      }
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const fetchFavorites = async () => {
+        try {
+          console.log('*********** refresh Fovorites Screen ***********');
+          setLoadingFavorites(true);
+          const token =
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
+          const favorites = await getFavoriteBenefits(token);
+          setFavorites(favorites);
+        } catch (err) {
+          console.log('getFavorites ERROR ==> ', err);
+        } finally {
+          setLoadingFavorites(false);
+        }
+      };
 
-    fetchFavorites();
-  }, []);
+      fetchFavorites();
+    }, []),
+  );
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = date.getUTCDate();
-    const month = date.getUTCMonth() + 1;
-    const year = date.getUTCFullYear();
-    const formattedDate = `${day}/${month}/${year}`;
-    return formattedDate;
+  const handleGoBack = () => {
+    navigation.goBack();
+    return true;
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <MainHeader title={t('favorite')} />
-      {favorites.length > 0 && (
-        <View style={styles.searchContainer}>
-          <TouchableOpacity style={styles.searchBtnStyle}>
-            <Image
-              source={require('../assets/icons/searchIcon_light.png')}
-              resizeMode={'contain'}
-              style={styles.searchIconStyle}
-            />
-          </TouchableOpacity>
-          <TextInput
-            placeholder="ابحث عن فائدة"
-            style={styles.searchInputField}
+      <MainHeader title={t('favorite')} onPressHandler={handleGoBack} />
+      <View style={styles.searchContainer}>
+        <TouchableOpacity style={styles.searchBtnStyle}>
+          <Image
+            source={require('../assets/icons/searchIcon_light.png')}
+            resizeMode={'contain'}
+            style={styles.searchIconStyle}
           />
-        </View>
-      )}
+        </TouchableOpacity>
+        <TextInput
+          placeholder={t("searchForBenefit")}
+          style={styles.searchInputField}
+        />
+      </View>
 
       <ScrollView
         contentContainerStyle={styles.contentContainer}
@@ -99,10 +101,12 @@ export const FavoriteScreen = () => {
                 {favorites.map(favorite => (
                   <Benefit
                     key={favorite._id}
+                    id={favorite._id}
+                    bookId={favorite.book}
                     benefitTitle={favorite.name}
                     benefitDate={formatDate(favorite.createdAt)}
                     benefitContent={favorite.content}
-                    benefitImg={favorite.benefitImg}
+                    benefitImg={favorite.img_url}
                     pageNumber={favorite.page_number}
                     bgColor={favorite.color}
                     borderColor={favorite.border_color}
@@ -130,7 +134,7 @@ const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
       backgroundColor: colors.mainScreen,
       justifyContent: 'center',
@@ -170,12 +174,12 @@ const getStyles = (isRTL: boolean) => {
       alignItems: 'center',
     },
     favoritesList: {
-      rowGap: 20,
+      rowGap: 15,
       marginBottom: 25,
       width: '100%',
     },
     indicatorStyle: {
-      top: 150,
+      top: 200,
     },
   });
 };

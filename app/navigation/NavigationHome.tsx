@@ -94,19 +94,19 @@ const getStyles = () => {
   return StyleSheet.create({
     tabBar: {
       height: 80,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
-      paddingTop: 10,
       justifyContent: 'space-between',
+      borderColor: colors.white,
     },
     tabBarLabel: {
       fontFamily: 'ElMessiri-Medium',
       fontSize: 12,
       marginTop: 4,
+      marginBottom: 15,
     },
     tabBarButton: {
       justifyContent: 'center',
       alignItems: 'center',
+      height: 80,
     },
   });
 };

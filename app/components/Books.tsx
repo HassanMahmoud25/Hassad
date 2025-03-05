@@ -19,7 +19,7 @@ export const Books = () => {
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
   const [books, setBooks] = useState<
-    {_id: number; image?: any; name: string; num_of_benefits: number}[]
+    {_id: string; img_url?: string; name: string; num_of_benefits: number}[]
   >([]);
   const [loadingBooks, setLoadingBooks] = useState<boolean>(true);
 
@@ -37,7 +37,7 @@ export const Books = () => {
         setLoadingBooks(false);
       }
     };
-    
+
     fetchBooks();
   }, []);
 
@@ -66,7 +66,8 @@ export const Books = () => {
                 {books.map(book => (
                   <Book
                     key={book._id}
-                    bookCover={book.image}
+                    bookId={book._id}
+                    bookCover={book.img_url}
                     bookName={book.name}
                     benefitsCount={book.num_of_benefits}
                   />
@@ -90,7 +91,7 @@ const getStyles = (isRTL: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: '3.75%',
+      paddingHorizontal: '5%',
     },
     headerContainer: {
       marginTop: 15,

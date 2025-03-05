@@ -1,13 +1,21 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import colors from '../configs/colors';
-export const AddComponent: React.FC<{positionStyle: any}> = ({
+
+interface AddComponentProps {
+  positionStyle: any;
+  onPress: () => void;
+}
+
+export const AddComponent: React.FC<AddComponentProps> = ({
   positionStyle,
+  onPress,
 }) => {
   const styles = useMemo(() => getStyles(), []);
 
   return (
     <TouchableOpacity
+      onPress={onPress}
       activeOpacity={0.5}
       style={[styles.floatingButton, positionStyle]}>
       <Image

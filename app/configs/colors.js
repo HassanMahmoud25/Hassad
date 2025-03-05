@@ -3,6 +3,7 @@ const colors = {
   lightMove: '#D3B5F3',
   primaryBlack: '#333333',
   mainScreen: '#F5F5F5',
+  secondaryScreenBgColor: '#F9F9F9',
   white: '#FFFFFF',
   red: '#CB1616',
   lightRed: '#DD6565',

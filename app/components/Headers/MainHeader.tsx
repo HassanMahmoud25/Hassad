@@ -7,12 +7,14 @@ interface MainHeaderProps {
   title: string;
   showBackIcon?: boolean;
   showSearchIcon?: boolean;
+  onPressHandler: () => {};
 }
 
 export const MainHeader: React.FC<MainHeaderProps> = ({
   title,
   showBackIcon,
   showSearchIcon,
+  onPressHandler,
 }) => {
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
@@ -21,7 +23,10 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
     <View style={styles.mainContainer}>
       <View style={styles.innerContainer}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity activeOpacity={0.5} style={styles.iconContainer}>
+        <TouchableOpacity
+          onPress={onPressHandler}
+          activeOpacity={0.5}
+          style={styles.iconContainer}>
           {!!showBackIcon && (
             <Image
               source={require('../../assets/icons/Arrow_black.png')}
@@ -48,7 +53,7 @@ const getStyles = (isRTL: boolean) => {
     mainContainer: {
       paddingTop: 30,
       paddingBottom: 10,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
     },
     innerContainer: {
@@ -62,6 +67,7 @@ const getStyles = (isRTL: boolean) => {
       textAlign: 'center',
       fontFamily: 'ElMessiri-Bold',
       color: colors.primaryBlack,
+      width: "85%"
     },
     iconContainer: {
       position: 'absolute',
@@ -72,7 +78,7 @@ const getStyles = (isRTL: boolean) => {
     headerBackIcon: {
       width: 9,
       height: 16,
-      transform: [{scaleX : isRTL ? 1 : -1}]
+      transform: [{scaleX: isRTL ? 1 : -1}],
     },
     headerSearchIcon: {
       width: 24,

@@ -66,7 +66,7 @@ const getStyles = (isRTL: boolean) => {
       alignItems: 'center',
     },
     modalContainer: {
-      width: '92.5%',
+      width: '90%',
       backgroundColor: colors.white,
       borderRadius: 23,
       paddingHorizontal: 35,

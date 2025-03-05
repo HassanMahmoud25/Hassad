@@ -9,85 +9,102 @@ import {
   View,
   Text,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {MainHeader} from '../components/Headers/MainHeader';
 import colors from '../configs/colors';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {AddComponent} from '../components/AddComponent';
 import {Book} from '../components/Book';
-import { useRTL } from '../contexts/RTLProvider';
+import {useRTL} from '../contexts/RTLProvider';
+import {getFolderBooks} from '../services/foldersService';
+import {ThereAreNoItemsComp} from '../components/ThereAreNoItemsComp';
+import AddItemModal from '../components/Modals/AddItemModal';
+import {t} from 'i18next';
 
 type ParamList = {
-  BookBenefitsScreen: {title: string};
+  BookBenefitsScreen: {title: string; id: string};
 };
 
 export const FolderBooks = () => {
   const isRTL = useRTL();
 
-  const [books] = useState([
+  const [showAddItemModal, setShowAddItemModal] = useState<boolean>(false);
+  const [loadingBooks, setLoadingBooks] = useState(true);
+  const [books, setBooks] = useState<
     {
-      key: 1,
-      bookName: 'ثلاثية غرناطة ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 2,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 3,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 4,
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 5,
-      bookName: 'ثلاثية غرناطة ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 6,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 7,
-      bookCover: require('../assets/images/bookTempCover.png'),
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-    {
-      key: 8,
-      bookName: 'ثلاثية غرناطة',
-      benefitsCount: 7,
-    },
-  ]);
+      _id: string;
+      name: string;
+      img_url: string;
+      num_of_benefits: number;
+      createdAt: string;
+    }[]
+  >([]);
 
   const route = useRoute<RouteProp<ParamList, 'BookBenefitsScreen'>>();
-  const {title} = route.params;
+
+  const {title, id} = route.params;
 
   const navigation = useNavigation();
 
+  const backPresshandler = () => {
+    navigation.goBack();
+    return true;
+  };
+
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
+  const fetchFolderBooks = async () => {
+    try {
+      setLoadingBooks(true);
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
+      const folderBooks = await getFolderBooks(id, token);
+      setBooks(folderBooks);
+    } catch (err) {
+      console.log('fetchFolderBooks ERROR ==> ', err);
+    } finally {
+      setLoadingBooks(false);
+    }
+  };
+
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      navigation.goBack();
-      return true;
-    });
+    fetchFolderBooks();
+
+    const backHandlerObj = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backPresshandler,
+    );
+
+    return () => {
+      backHandlerObj.remove();
+    };
   }, []);
+
+  const handleClickAddBtn = () => {
+    setShowAddItemModal(true);
+  };
+
+  const closeAddItemModal = () => {
+    setShowAddItemModal(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <MainHeader title={title} showBackIcon={true} />
+      <MainHeader
+        title={title}
+        showBackIcon={true}
+        onPressHandler={backPresshandler}
+      />
+
+      <AddItemModal
+        visible={showAddItemModal}
+        type={'books'}
+        folderId={id}
+        onRefresh={fetchFolderBooks}
+        onCancel={closeAddItemModal}
+      />
+
       <View style={styles.contentContainer}>
         <View style={styles.searchContainer}>
           <TouchableOpacity style={styles.searchBtnStyle}>
@@ -98,13 +115,15 @@ export const FolderBooks = () => {
             />
           </TouchableOpacity>
           <TextInput
-            placeholder="ابحث عن كتاب"
+            placeholder={t('searchForBook')}
             style={styles.searchInputField}
           />
         </View>
 
         <View style={styles.filterAndBooksCount}>
-          <Text style={styles.booksCount}>{'عدد الكتب :  0'}</Text>
+          <Text style={styles.booksCount}>{`${t('booksCount')} : ${
+            books.length
+          }`}</Text>
           <Image
             source={require('../assets/icons/filterIcon.png')}
             resizeMode="contain"
@@ -113,19 +132,35 @@ export const FolderBooks = () => {
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.booksContainer}>
-            {books.map(book => (
-              <Book
-                key={book.key}
-                bookCover={book.bookCover}
-                bookName={book.bookName}
-                benefitsCount={book.benefitsCount}
-              />
-            ))}
-          </View>
+          {loadingBooks ? (
+            <View style={styles.indicatorStyle}>
+              <ActivityIndicator size={50} color={colors.primaryMove} />
+            </View>
+          ) : books.length > 0 ? (
+            <View style={styles.booksContainer}>
+              {books.map(book => (
+                <Book
+                  key={book._id}
+                  bookId={book._id}
+                  bookCover={book.img_url}
+                  bookName={book.name}
+                  benefitsCount={book.num_of_benefits}
+                />
+              ))}
+            </View>
+          ) : (
+            <ThereAreNoItemsComp
+              imageSrc={require('../assets/images/folderIsEmpty.png')}
+              text={t('folderIsEmptyLetsAddBooksToIt')}
+              subText={t('StartTheExperienceClickTheIconBelowAndCreateBook')}
+            />
+          )}
         </ScrollView>
 
-        <AddComponent positionStyle={styles.addBtnStyle} />
+        <AddComponent
+          onPress={handleClickAddBtn}
+          positionStyle={styles.addBtnStyle}
+        />
       </View>
     </SafeAreaView>
   );
@@ -139,7 +174,7 @@ const getStyles = (isRTL: boolean) => {
     },
     contentContainer: {
       flex: 1,
-      width: '92.5%',
+      width: '90%',
       alignSelf: 'center',
       marginTop: 15,
     },
@@ -198,6 +233,9 @@ const getStyles = (isRTL: boolean) => {
     addBtnStyle: {
       [isRTL ? 'left' : 'right']: 0,
       bottom: 80,
+    },
+    indicatorStyle: {
+      top: 200,
     },
   });
 };
