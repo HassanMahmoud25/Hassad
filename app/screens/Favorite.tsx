@@ -50,10 +50,8 @@ export const FavoriteScreen = () => {
         try {
           console.log('*********** refresh Fovorites Screen ***********');
           setLoadingFavorites(true);
-          const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-          const favorites = await getFavoriteBenefits(token);
-          setFavorites(favorites);
+          const favoritesArr = await getFavoriteBenefits();
+          setFavorites(favoritesArr);
         } catch (err) {
           console.log('getFavorites ERROR ==> ', err);
         } finally {
@@ -82,7 +80,7 @@ export const FavoriteScreen = () => {
           />
         </TouchableOpacity>
         <TextInput
-          placeholder={t("searchForBenefit")}
+          placeholder={t('searchForBenefit')}
           style={styles.searchInputField}
         />
       </View>

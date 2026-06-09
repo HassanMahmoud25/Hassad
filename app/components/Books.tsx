@@ -27,10 +27,8 @@ export const Books = () => {
     const fetchBooks = async () => {
       try {
         setLoadingBooks(true);
-        const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-        const books = await getBooks(token);
-        setBooks(books);
+        const booksArr = await getBooks();
+        setBooks(booksArr);
       } catch (err) {
         console.log('fetchBooks ERROR ==> ', err);
       } finally {

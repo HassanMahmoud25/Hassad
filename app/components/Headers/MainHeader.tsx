@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import colors from '../../configs/colors';
 import {useRTL} from '../../contexts/RTLProvider';
+import {login} from '../../services/authService';
 
 interface MainHeaderProps {
   title: string;
@@ -18,6 +19,14 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
 }) => {
   const isRTL = useRTL();
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
+
+  const handleLogin = async () => {
+    await login({
+      email: 'saif82820@gmail.com',
+      password: 'password',
+    });
+    console.log('login clicked');
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -36,11 +45,13 @@ export const MainHeader: React.FC<MainHeaderProps> = ({
           )}
 
           {!!showSearchIcon && (
-            <Image
-              source={require('../../assets/icons/searchIcon.png')}
-              resizeMode="contain"
-              style={styles.headerSearchIcon}
-            />
+            <TouchableOpacity onPress={handleLogin}>
+              <Image
+                source={require('../../assets/icons/searchIcon.png')}
+                resizeMode="contain"
+                style={styles.headerSearchIcon}
+              />
+            </TouchableOpacity>
           )}
         </TouchableOpacity>
       </View>
@@ -67,7 +78,7 @@ const getStyles = (isRTL: boolean) => {
       textAlign: 'center',
       fontFamily: 'ElMessiri-Bold',
       color: colors.primaryBlack,
-      width: "85%"
+      width: '85%',
     },
     iconContainer: {
       position: 'absolute',

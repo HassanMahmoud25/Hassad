@@ -27,10 +27,8 @@ export const Folders = () => {
     const fetchFolders = async () => {
       try {
         setLoadingFolders(true);
-        const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-        const folders = await getFolders(token);
-        setFolders(folders);
+        const foldersArr = await getFolders();
+        setFolders(foldersArr);
       } catch (err) {
         console.log('fetchFolders ERROR ==> ', err);
       } finally {

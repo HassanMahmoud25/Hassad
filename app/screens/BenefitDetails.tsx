@@ -65,9 +65,7 @@ export const BenefitDetails = () => {
 
   const deleteBenefitHandler = async () => {
     try {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-      await deleteBenefit(bookId, id, token);
+      await deleteBenefit(bookId, id);
       navigation.goBack();
       return true;
     } catch (err) {

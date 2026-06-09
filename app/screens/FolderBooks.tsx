@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   BackHandler,
   SafeAreaView,
@@ -47,26 +47,24 @@ export const FolderBooks = () => {
 
   const navigation = useNavigation();
 
-  const backPresshandler = () => {
+  const backPresshandler = useCallback(() => {
     navigation.goBack();
     return true;
-  };
+  }, [navigation]);
 
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
-  const fetchFolderBooks = async () => {
+  const fetchFolderBooks = useCallback(async () => {
     try {
       setLoadingBooks(true);
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-      const folderBooks = await getFolderBooks(id, token);
+      const folderBooks = await getFolderBooks(id);
       setBooks(folderBooks);
     } catch (err) {
       console.log('fetchFolderBooks ERROR ==> ', err);
     } finally {
       setLoadingBooks(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchFolderBooks();
@@ -79,7 +77,7 @@ export const FolderBooks = () => {
     return () => {
       backHandlerObj.remove();
     };
-  }, []);
+  }, [fetchFolderBooks, backPresshandler]);
 
   const handleClickAddBtn = () => {
     setShowAddItemModal(true);

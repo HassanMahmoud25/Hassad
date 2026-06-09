@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import colors from '../../configs/colors';
-import {useRTL} from '../../contexts/RTLProvider';
 import ImagePicker from 'react-native-image-crop-picker';
 import {t} from 'i18next';
 import {addBook, addFolder} from '../../services/booksService';
@@ -32,8 +31,7 @@ const AddItemModal: React.FC<ConfirmationModalProps> = ({
   onCancel,
   onRefresh,
 }) => {
-  const isRTL = useRTL();
-  const styles = useMemo(() => getStyles(isRTL), [isRTL]);
+  const styles = useMemo(() => getStyles(), []);
 
   const [bookName, setBookName] = useState<string>('');
   const [authorName, setAuthorName] = useState<string>('');
@@ -48,9 +46,11 @@ const AddItemModal: React.FC<ConfirmationModalProps> = ({
     useState<boolean>(false);
 
   useEffect(() => {
-    if (bookName.trim().length > 0 && authorName.trim().length > 0)
+    if (bookName.trim().length > 0 && authorName.trim().length > 0) {
       setActiveSaveBtn(true);
-    else setActiveSaveBtn(false);
+    } else {
+      setActiveSaveBtn(false);
+    }
   }, [bookName, authorName]);
 
   const cancelHandler = () => {
@@ -65,8 +65,6 @@ const AddItemModal: React.FC<ConfirmationModalProps> = ({
   const onSavingItem = async () => {
     try {
       setLoading(true);
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
       const formData = new FormData();
       formData.append('name', bookName);
       formData.append('author', authorName);
@@ -77,11 +75,11 @@ const AddItemModal: React.FC<ConfirmationModalProps> = ({
       };
       imageSelected && formData.append('image', image);
       if (type === 'books') {
-        !!folderId
-          ? await addBookToFolder(formData, folderId, token)
-          : await addBook(formData, token);
+        folderId
+          ? await addBookToFolder(formData, folderId)
+          : await addBook(formData);
       } else {
-        await addFolder(formData, token);
+        await addFolder(formData);
       }
       cancelHandler();
     } catch (err) {
@@ -239,7 +237,7 @@ const AddItemModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 
-const getStyles = (isRTL: boolean) => {
+const getStyles = () => {
   return StyleSheet.create({
     overlay: {
       flex: 1,

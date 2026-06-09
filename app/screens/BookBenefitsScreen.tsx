@@ -58,10 +58,10 @@ export const BookBenefitsScreen = () => {
 
   const styles = useMemo(() => getStyles(isRTL), [isRTL]);
 
-  const BackHandlerMethod = () => {
+  const BackHandlerMethod = useCallback(() => {
     navigation.goBack();
     return true;
-  };
+  }, [navigation]);
 
   useFocusEffect(
     useCallback(() => {
@@ -69,10 +69,8 @@ export const BookBenefitsScreen = () => {
         try {
           setLoadingBenefits(true);
           console.log('*********** refresh Book Benefits Screen ***********');
-          const token =
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZjNGIwOTI4NDZlYTRjMmM2ZWYxNjI4IiwiZW1haWwiOiJ0ZXN0QGVtYWlsLmNvIiwiaWF0IjoxNzI0MjI3MTk0fQ.iAjowbF9o8g2jnm-Dc0gJ7PMMPtLTyVzhhYKErwcewg';
-          const benefits = await getBookBenefits(id, token);
-          setBenefits(benefits);
+          const benefitsArr = await getBookBenefits(id);
+          setBenefits(benefitsArr);
         } catch (err) {
           console.log('fetchBookBenefits ERROR ====> ', err);
         } finally {
@@ -81,7 +79,7 @@ export const BookBenefitsScreen = () => {
       };
 
       fetchBookBenefits();
-    }, []),
+    }, [id]),
   );
 
   useEffect(() => {
@@ -93,7 +91,7 @@ export const BookBenefitsScreen = () => {
     return () => {
       backHandlerObj.remove();
     };
-  }, []);
+  }, [BackHandlerMethod]);
 
   return (
     <SafeAreaView style={styles.container}>
