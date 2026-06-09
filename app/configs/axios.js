@@ -1,8 +1,10 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {BASE_API_URL} from '@env';
+
 const axiosInstance = axios.create({
-  baseURL: 'https://hasad-be.vercel.app',
+  baseURL: BASE_API_URL,
 });
 
 axiosInstance.interceptors.request.use(
