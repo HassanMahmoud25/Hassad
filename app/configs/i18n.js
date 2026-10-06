@@ -1,11 +1,12 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import {I18nManager} from 'react-native';
 
 // Import translation files
 import en from '../locales/en.json';
 import ar from '../locales/ar.json';
 
+// Boots in Arabic; app/lib/locale.ts then applies the saved language and the
+// matching layout direction before the first screen renders.
 i18n.use(initReactI18next).init({
   resources: {
     en: {translation: en},
@@ -17,8 +18,5 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
-
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(i18n.language === 'ar');
 
 export default i18n;

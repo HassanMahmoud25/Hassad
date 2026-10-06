@@ -1,50 +1,55 @@
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {MainScreen} from './app/screens/Main';
-import {FavoriteScreen} from './app/screens/Favorite';
-import {ProfileScreen} from './app/screens/Profile';
-import {NavigationHome} from './app/navigation/NavigationHome';
-import {SafeAreaView, StatusBar} from 'react-native';
-import {BookBenefitsScreen} from './app/screens/BookBenefitsScreen';
-import {BenefitDetails} from './app/screens/BenefitDetails';
-import {FolderBooks} from './app/screens/FolderBooks';
-import {RTLProvider} from './app/contexts/RTLProvider';
+import React, {useEffect, useState} from 'react';
+import {Platform, StatusBar} from 'react-native';
+import {QueryClientProvider} from '@tanstack/react-query';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {AuthProvider} from './app/contexts/AuthContext';
+import {RootNavigator} from './app/navigation/RootNavigator';
+import {isOnboarded} from './app/lib/onboarding';
+import {queryClient} from './app/queries/queryClient';
+import {ThemeProvider, useTheme} from './app/theme/ThemeProvider';
+import {bootstrapLanguage} from './app/lib/locale';
+import {setSystemBarContent} from './app/lib/systemBars';
 
-const Stack = createNativeStackNavigator();
+const ThemedStatusBar = () => {
+  const {isDark} = useTheme();
+  useEffect(() => setSystemBarContent(!isDark), [isDark]);
+  // Android: MainActivity draws edge to edge and HassadSystemBars sets the
+  // icon colour. RN's StatusBar would re-apply its own window insets
+  // handling there and pull the app back inside the system bars.
+  return Platform.OS === 'ios' ? <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} /> : null;
+};
 
-function App(): React.JSX.Element {
+function App(): React.JSX.Element | null {
+  const [ready, setReady] = useState(false);
+  const [onboarded, setOnboarded] = useState(false);
+
+  useEffect(() => {
+    Promise.all([bootstrapLanguage(), isOnboarded()])
+      .then(([directionSettled, onboarding]) => {
+        if (!directionSettled) {
+          return; // the app is restarting into the stored direction
+        }
+        setOnboarded(onboarding);
+        setReady(true);
+      })
+      .catch(() => setReady(true));
+  }, []);
+
+  if (!ready) {
+    return null;
+  }
+
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <RTLProvider>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} />
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="home"
-            screenOptions={{headerShown: false, animation: 'fade'}}>
-            <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen name="Favorite" component={FavoriteScreen} />
-            <Stack.Screen name="Profile" component={ProfileScreen} />
-            <Stack.Screen name="home" component={NavigationHome} />
-            <Stack.Screen
-              name="bookBenefits"
-              component={BookBenefitsScreen}
-              options={{animation: 'fade_from_bottom'}}
-            />
-            <Stack.Screen
-              name="benefitDetails"
-              component={BenefitDetails}
-              options={{animation: 'fade_from_bottom'}}
-            />
-            <Stack.Screen
-              name="folderBooks"
-              component={FolderBooks}
-              options={{animation: 'fade_from_bottom'}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </RTLProvider>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemedStatusBar />
+          <AuthProvider>
+            <RootNavigator initiallyOnboarded={onboarded} />
+          </AuthProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
 

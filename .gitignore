@@ -72,3 +72,9 @@ yarn-error.log
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.claude
+# Thmanyah (خط ثمانية) may be embedded in the app but not redistributed.
+# Download it from the official site; see app/assets/fonts/README.md.
+app/assets/fonts/thmanyah*
+android/app/src/main/assets/fonts/thmanyah*
