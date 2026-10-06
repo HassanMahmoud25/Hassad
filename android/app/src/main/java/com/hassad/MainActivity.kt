@@ -18,6 +18,8 @@ class MainActivity : ReactActivity() {
   override fun getMainComponentName(): String = "hassad"
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    // The manifest's LaunchTheme (logo on paper) is for the launch window only.
+    setTheme(R.style.AppTheme)
     // Paper runs under the status and navigation bars; JS pads with insets.
     // Must precede super.onCreate, before AppCompat builds its sub-decor.
     WindowCompat.setDecorFitsSystemWindows(window, false)

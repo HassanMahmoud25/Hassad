@@ -193,7 +193,8 @@ export const NoteScreen = ({route, navigation}: Props) => {
 
       {/* Reading chrome floats; the page itself stays paper. */}
       <View style={{position: 'absolute', bottom, start: 16, end: 16}}>
-        <Glass radius={32} style={{height: 64, paddingHorizontal: 6, flexDirection: 'row', alignItems: 'center'}}>
+        {/* An even 8pt inset all round keeps the next pill concentric with the bar (32 − 8 = 24). */}
+        <Glass radius={32} style={{height: 64, paddingHorizontal: 8, flexDirection: 'row', alignItems: 'center'}}>
           <BarButton icon="edit" label={t('note.edit')} onPress={() => navigation.navigate('editor', {bookId, note})} />
           <BarButton icon="share" label={t('note.share')} onPress={share} />
           <BarButton icon="more" label={t('note.more')} onPress={() => setMoreOpen(true)} />
@@ -204,7 +205,8 @@ export const NoteScreen = ({route, navigation}: Props) => {
               iconEnd="forward"
               size="sm"
               onPress={() => navigation.setParams({noteId: next._id, note: next})}
-              style={{height: 48, borderRadius: 24, paddingHorizontal: 16}}
+              // Button pins non-block buttons to the cross-axis start; centre it in the bar.
+              style={{height: 48, borderRadius: 24, paddingHorizontal: 16, alignSelf: 'center'}}
             />
           )}
         </Glass>

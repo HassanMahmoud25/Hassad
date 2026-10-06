@@ -8,13 +8,16 @@ export class ApiError extends Error {
   status?: number;
   /** express-validator messages keyed by field (`path`). */
   fields: Record<string, string>;
+  /** The backend's stable reason, e.g. `UPLOAD_UNAVAILABLE`, `INVALID_IMAGE`. */
+  code?: string;
 
-  constructor(kind: ApiErrorKind, message: string, status?: number, fields: Record<string, string> = {}) {
+  constructor(kind: ApiErrorKind, message: string, status?: number, fields: Record<string, string> = {}, code?: string) {
     super(message);
     this.name = 'ApiError';
     this.kind = kind;
     this.status = status;
     this.fields = fields;
+    this.code = code;
   }
 }
 
@@ -62,10 +65,13 @@ export const toApiError = (error: unknown): ApiError => {
     if (res.status === 404) {
       return new ApiError('notFound', textOf(data) ?? 'Not found', 404);
     }
-    return new ApiError('server', textOf(data) ?? error.message, res.status);
+    return new ApiError('server', textOf(data) ?? error.message, res.status, {}, codeOf(data));
   }
   return new ApiError('server', error instanceof Error ? error.message : String(error));
 };
+
+const codeOf = (data: unknown): string | undefined =>
+  data && typeof data === 'object' && typeof (data as {code?: unknown}).code === 'string' ? (data as {code: string}).code : undefined;
 
 const textOf = (data: unknown): string | undefined => {
   if (typeof data === 'string' && data.trim()) {

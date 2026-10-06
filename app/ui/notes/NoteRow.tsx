@@ -1,12 +1,13 @@
 import React from 'react';
-import {Pressable, View} from 'react-native';
+import {I18nManager, Pressable, View} from 'react-native';
 import {useTheme} from '../../theme/ThemeProvider';
 import {ribbonFor} from '../../theme/tokens';
 import {Text} from '../Text';
 import {Ribbon} from '../Ribbon';
 import {Icon} from '../Icon';
-import {Cover} from '../book/Cover';
 import {coverTitle} from '../book/coverDesign';
+import {detectScript} from '../../lib/text';
+import {uiScript} from '../../lib/locale';
 
 interface NoteRowProps {
   title: string;
@@ -31,6 +32,9 @@ interface NoteRowProps {
  */
 export const NoteRow = ({title, excerpt, page, pageMark, color, favourite, first, onPress, accessibilityHint, source}: NoteRowProps) => {
   const {colors} = useTheme();
+  // The book's name sits under the note on the note's own side, whatever its script.
+  const noteIsRTL = detectScript(title, uiScript()) === 'arabic';
+  const sourceAlign = noteIsRTL === I18nManager.isRTL ? 'start' : 'end';
   return (
     <Pressable
       onPress={onPress}
@@ -70,12 +74,9 @@ export const NoteRow = ({title, excerpt, page, pageMark, color, favourite, first
           </Text>
         ) : null}
         {source ? (
-          <View style={{flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8}}>
-            <Cover title={source.title} author={source.author} imageUrl={source.imageUrl} width={16} shadow="none" decorative />
-            <Text role="meta" tone="ink3" numberOfLines={1} style={{flexShrink: 1}}>
-              {coverTitle(source.title)}
-            </Text>
-          </View>
+          <Text role="meta" tone="ink3" align={sourceAlign} numberOfLines={1} style={{marginTop: 8}}>
+            {coverTitle(source.title)}
+          </Text>
         ) : null}
       </View>
     </Pressable>

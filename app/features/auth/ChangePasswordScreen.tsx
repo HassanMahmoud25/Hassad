@@ -12,6 +12,7 @@ import {toApiError} from '../../apis/errors';
 import {RootStackParamList} from '../../navigation/types';
 import {Button, CodeInput, Field, Icon, IconButton, Text} from '../../ui';
 import {authErrorKey} from './authErrors';
+import {Envelope} from './Envelope';
 import {PasswordToggle} from './PasswordToggle';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'changePassword'>;
@@ -29,7 +30,7 @@ export const ChangePasswordScreen = ({navigation}: Props) => {
   const {t} = useT();
   const insets = useSafeAreaInsets();
   const keyboard = useKeyboardHeight();
-  const {user} = useAuth();
+  const {user, replaceToken} = useAuth();
   const [phase, setPhase] = useState<Phase>('intro');
   const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
@@ -78,7 +79,11 @@ export const ChangePasswordScreen = ({navigation}: Props) => {
     }
     setPhase('saving');
     try {
-      await resetPassword({otp: code, password, verify_password: confirm});
+      const {token} = await resetPassword({otp: code, password, verify_password: confirm});
+      // Older sessions (this one included) just ended; keep this device signed in.
+      if (token) {
+        await replaceToken(token);
+      }
       setPhase('done');
     } catch (e) {
       if (/invalid otp/i.test(toApiError(e).message)) {
@@ -137,6 +142,13 @@ export const ChangePasswordScreen = ({navigation}: Props) => {
         <Text role="label" script="latin" style={{marginTop: 2}}>
           {user?.email}
         </Text>
+
+        {asking ? (
+          // The code arrives by email: the same sealed letter as email confirmation.
+          <View style={{alignItems: 'center', marginTop: 56}}>
+            <Envelope sealed />
+          </View>
+        ) : null}
 
         {!asking ? (
           <View style={{marginTop: 26, gap: 16}}>

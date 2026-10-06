@@ -3,7 +3,6 @@ import {Pressable, TextInput, View} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Svg, {Path, Rect} from 'react-native-svg';
 import {useTheme} from '../../theme/ThemeProvider';
 import {gutter} from '../../theme/tokens';
 import {useAuth} from '../../contexts/AuthContext';
@@ -12,7 +11,8 @@ import {useKeyboardHeight} from '../../lib/keyboard';
 import {requestVerifyUser, verifyUser} from '../../apis/auth.api';
 import {toApiError} from '../../apis/errors';
 import {RootStackParamList} from '../../navigation/types';
-import {Button, CodeInput, Icon, IconButton, Text, WheatSeal} from '../../ui';
+import {Button, CodeInput, IconButton, Text} from '../../ui';
+import {Envelope} from './Envelope';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'verifyEmail'>;
 
@@ -193,30 +193,6 @@ export const VerifyEmailScreen = ({route, navigation}: Props) => {
               {t('auth.verifyNote')}
             </Text>
           </>
-        )}
-      </View>
-    </View>
-  );
-};
-
-/** A plain paper envelope; the wheat seal closes it until the address is confirmed. */
-const Envelope = ({sealed}: {sealed: boolean}) => {
-  const {colors} = useTheme();
-  return (
-    <View style={{width: 190, height: 128, alignItems: 'center', justifyContent: 'center'}} importantForAccessibility="no-hide-descendants">
-      <Svg width={190} height={128} style={{position: 'absolute'}}>
-        <Rect x={1} y={1} width={188} height={126} rx={6} fill={colors.card} stroke={colors.rule} strokeWidth={1} />
-        <Path d="M2 3 L95 70 L188 3" fill="none" stroke={colors.rule} strokeWidth={1.2} />
-        <Path d="M2 125 L72 54 M188 125 L118 54" fill="none" stroke={colors.rule2} strokeWidth={1} />
-      </Svg>
-      {/* Sealed until confirmed; then the seal gives way to a tick. */}
-      <View style={{marginTop: 26, boxShadow: '0px 6px 12px -6px rgba(90,60,10,0.5)', borderRadius: 30}}>
-        {sealed ? (
-          <WheatSeal size={56} />
-        ) : (
-          <View style={{width: 56, height: 56, borderRadius: 28, backgroundColor: colors.ink, alignItems: 'center', justifyContent: 'center'}}>
-            <Icon name="check" size={28} color={colors.onInk} strokeWidth={2} />
-          </View>
         )}
       </View>
     </View>

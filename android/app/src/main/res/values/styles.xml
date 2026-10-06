@@ -4,6 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+        <item name="android:windowBackground">@color/hassad_window</item>
+    </style>
+
+    <!-- The launch window only (MainActivity swaps to AppTheme in onCreate):
+         the Hassad logo centred on paper. Android 12+ uses values-v31. -->
+    <style name="LaunchTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch_background</item>
     </style>
 
 </resources>

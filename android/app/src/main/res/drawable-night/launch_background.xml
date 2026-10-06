@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Night paper only: the black logo would vanish on it. The white variant
+     goes here once it exists. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/hassad_window" />
+</layer-list>

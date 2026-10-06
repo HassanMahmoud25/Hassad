@@ -1,0 +1,7 @@
+<resources>
+    <!-- The window behind the app before the first frame: Paper, not white
+         (palettes.light.paper), so launch doesn't flash. -->
+    <color name="hassad_window">#F7F4EE</color>
+    <!-- Adaptive icon backdrop: paper behind the black Hassad logo. -->
+    <color name="ic_launcher_background">#F7F4EE</color>
+</resources>

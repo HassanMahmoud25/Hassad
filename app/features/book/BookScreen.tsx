@@ -1,5 +1,4 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import React, {useMemo, useRef, useState} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
@@ -43,21 +42,6 @@ export const BookScreen = ({route, navigation}: Props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const scrollY = useRef(new Animated.Value(0)).current;
-
-  // Notes are still added, edited and favourited on legacy screens (until
-  // Phase 2), which don't know these query keys: refresh on return.
-  const firstFocus = useRef(true);
-  useFocusEffect(
-    useCallback(() => {
-      if (firstFocus.current) {
-        firstFocus.current = false;
-        return;
-      }
-      queryClient.invalidateQueries({queryKey: ['benefits', 'book', route.params.book._id]});
-      queryClient.invalidateQueries({queryKey: queryKeys.books.all});
-      queryClient.invalidateQueries({queryKey: queryKeys.folders.all});
-    }, [queryClient, route.params.book._id]),
-  );
 
   const list = useMemo<Benefit[]>(() => {
     const data = notes.data ?? [];
@@ -211,7 +195,8 @@ export const BookScreen = ({route, navigation}: Props) => {
               {book.name}
             </Text>
             <Text role="meta" tone="ink3">
-              {t('book.summary', {notes: count('notes', noteCount), selected: num(selected)})}
+              {/* A zero isn't news: show selections only when there are some. */}
+              {selected > 0 ? t('book.summary', {notes: count('notes', noteCount), selected: num(selected)}) : count('notes', noteCount)}
             </Text>
           </View>
         </View>

@@ -65,10 +65,16 @@ export const SignInScreen = ({navigation}: Props) => {
         ) : null
       }
       art={
-        // A book on the night table, at the far end from the title; it gives way to the banner.
+        // Two books at the end of the night table, dimmed so the title leads
+        // (SignIn board). They give way to the expired-session banner.
         sessionEnd === 'expired' ? null : (
-          <View pointerEvents="none" style={{position: 'absolute', bottom: 104, end: -18, transform: [{rotate: ar ? '-9deg' : '9deg'}]}} importantForAccessibility="no-hide-descendants">
-            <Cover title={ar ? 'مقدمة ابن خلدون' : 'Thinking, Fast and Slow'} author={ar ? 'ابن خلدون' : 'Daniel Kahneman'} width={84} shadow="hero" decorative />
+          <View pointerEvents="none" style={{position: 'absolute', bottom: 70, end: -20, width: 150, height: 160}} importantForAccessibility="no-hide-descendants">
+            <View style={{position: 'absolute', top: 24, end: 52, transform: [{rotate: ar ? '10deg' : '-10deg'}]}}>
+              <DimBook title={ar ? 'الأيام' : 'Meditations'} width={80} composition="block" binding="saffron" />
+            </View>
+            <View style={{position: 'absolute', top: 0, end: 0, transform: [{rotate: ar ? '-4deg' : '4deg'}]}}>
+              <DimBook title={ar ? 'مقدمة ابن خلدون' : 'Thinking, Fast and Slow'} width={88} composition="framed" binding="oxblood" />
+            </View>
           </View>
         )
       }
@@ -141,3 +147,11 @@ export const SignInScreen = ({navigation}: Props) => {
     </AuthLayout>
   );
 };
+
+/** A cover under a night veil: dimmed but opaque, so books can overlap. */
+const DimBook = ({title, width, composition, binding}: {title: string; width: number; composition: 'block' | 'framed'; binding: 'saffron' | 'oxblood'}) => (
+  <View style={{borderRadius: 5, overflow: 'hidden'}}>
+    <Cover title={title} width={width} composition={composition} binding={binding} shadow="none" decorative />
+    <View style={{position: 'absolute', top: 0, bottom: 0, start: 0, end: 0, backgroundColor: night.bg, opacity: 0.45}} />
+  </View>
+);

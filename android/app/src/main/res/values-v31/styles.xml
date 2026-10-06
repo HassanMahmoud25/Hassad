@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Android 12+ draws its own splash: the adaptive launcher icon (the
+         Hassad logo on a paper disc) over the paper window colour. -->
+    <style name="LaunchTheme" parent="AppTheme">
+        <item name="android:windowSplashScreenBackground">@color/hassad_window</item>
+    </style>
+
+</resources>

@@ -10,7 +10,7 @@ import {useReduceMotion} from '../../lib/a11y';
 import {currentLang} from '../../lib/locale';
 import {completeOnboarding} from '../../lib/onboarding';
 import {RootStackParamList} from '../../navigation/types';
-import {Button, Cover, Icon, Plank, Ribbon, Spine, Text, WheatSeal} from '../../ui';
+import {Button, Cover, HassadLogo, Icon, Plank, Ribbon, Spine, Text} from '../../ui';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'onboarding'>;
 
@@ -200,6 +200,14 @@ const Glow = ({width, height}: {width: number; height: number}) => (
 
 // ——— Illustrations, drawn with the app's own book objects ———
 
+/** Whether a title fits along a spine whole; a cut-off title looks careless,
+ * a plain spine doesn't. (Mirrors Spine's own type size.) */
+const spineFits = (title: string, width: number, height: number) => {
+  const latin = /^[\x00-\x7F’]+$/.test(title);
+  const size = latin ? Math.min(13, width * 0.34) : Math.min(12.5, width * 0.33);
+  return width >= 24 && [...title].length * size * (latin ? 0.5 : 0.52) <= height * 0.62;
+};
+
 // Real titles, chosen to match the language of the chapter's sentences.
 const SHELF = {
   ar: ['الأيام', 'كليلة ودمنة', 'طوق الحمامة', 'مقدمة ابن خلدون', 'البخلاء', 'رسالة الغفران', 'الإمتاع والمؤانسة'],
@@ -267,7 +275,7 @@ const Remains = ({titles, width, height}: {titles: string[]; width: number; heig
       <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: 3, paddingHorizontal: 18}}>
         {titles.map((title, i) => (
           <View key={title} style={i === lean ? {transform: [{rotate: '7deg'}], marginStart: 6} : undefined}>
-            <Spine seed={title} title={title} height={spineH - (i % 3) * 14} width={widths[i]} />
+            <Spine seed={title} title={spineFits(title, widths[i], spineH - (i % 3) * 14) ? title : undefined} height={spineH - (i % 3) * 14} width={widths[i]} />
           </View>
         ))}
       </View>
@@ -315,7 +323,7 @@ const Gather = ({titles, width, height}: {titles: string[]; width: number; heigh
     <View key={key}>
       <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: 3}}>
         {items.map((title, i) => (
-          <Spine key={title} seed={title} title={title} height={spineH - (i % 3) * 10} width={20 + ((i * 7) % 12)} />
+          <Spine key={title} seed={title} title={spineFits(title, 20 + ((i * 7) % 12), spineH - (i % 3) * 10) ? title : undefined} height={spineH - (i % 3) * 10} width={20 + ((i * 7) % 12)} />
         ))}
       </View>
       <Plank style={{marginHorizontal: 0}} />
@@ -362,7 +370,7 @@ const Bookplate = ({height}: {height: number}) => {
           {t('onboarding.yours')}
         </Text>
         <View style={{height: StyleSheet.hairlineWidth, width: 46, backgroundColor: p.goldInk, marginVertical: 14}} />
-        <WheatSeal size={58} />
+        <HassadLogo size={58} />
       </View>
     </View>
   );

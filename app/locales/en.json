@@ -19,7 +19,7 @@
       "search": "Search",
       "add": "Add",
       "loading": "One moment…",
-      "offline": "You’re offline."
+      "offline": "Couldn’t reach Hassad. Check your connection and try again."
     },
     "count": {
       "books_one": "1 book",
@@ -53,7 +53,7 @@
       "emptyBody": "Add the book you’re reading now, then write down what’s worth keeping.",
       "emptyAction": "Add a book",
       "errorTitle": "Couldn’t open your harvest",
-      "errorBody": "Check your connection and try again.",
+      "errorBody": "This didn’t load just now. Try again in a moment.",
       "sourcePage": "{{book}} · p. {{page}}"
     },
     "library": {
@@ -75,10 +75,11 @@
       "emptyShelf": "This shelf is waiting for its first book.",
       "shelfError": "Couldn’t load this shelf.",
       "errorTitle": "Couldn’t open your library",
-      "errorBody": "Check your connection and try again.",
-      "offlineTitle": "You’re offline",
+      "errorBody": "This didn’t load just now. Try again in a moment.",
+      "offlineTitle": "Couldn’t reach Hassad",
       "shelfOf": "{{name}} shelf",
-      "noBooksYet": "No books yet"
+      "noBooksYet": "No books yet",
+      "offlineBody": "Check your connection, or try again in a moment."
     },
     "me": {
       "title": "Me",
@@ -115,7 +116,8 @@
       "signOutBody": "Your books and notes stay in your account. You’ll need your email and password to come back.",
       "signOutConfirm": "Sign out",
       "sealHint": "Opens your page and settings",
-      "changePassword": "Change password"
+      "changePassword": "Change password",
+      "emptyFacts": "Your library’s figures appear here once you add books."
     },
     "book": {
       "factNotes": "notes",
@@ -202,7 +204,10 @@
       "shelfFixed": "Moving books between shelves isn’t available yet.",
       "uploadNote": "Uploading the cover can take a moment.",
       "uploadFailed": "The server couldn’t upload the cover photo, so the book wasn’t saved.",
-      "saveWithoutPhoto": "Use the designed cover instead"
+      "imageRejected": "This photo can’t be used as a cover. Choose another one.",
+      "saveWithoutPhoto": "Use the designed cover instead",
+      "cropTitle": "Crop the cover",
+      "cropDone": "Done"
     },
     "selections": {
       "title": "Selections",

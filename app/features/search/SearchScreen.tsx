@@ -234,7 +234,7 @@ export const SearchScreen = ({route, navigation}: Props) => {
     return (
       <View style={{flex: 1, backgroundColor: colors.paper}}>
         {header}
-        <StateBlock icon={s.error.kind === 'network' ? 'offline' : 'info'} title={s.error.kind === 'network' ? t('library.offlineTitle') : t('library.errorTitle')} body={t('harvest.errorBody')} />
+        <StateBlock icon={s.error.kind === 'network' ? 'offline' : 'info'} title={s.error.kind === 'network' ? t('library.offlineTitle') : t('library.errorTitle')} body={s.error.kind === 'network' ? t('library.offlineBody') : t('harvest.errorBody')} />
       </View>
     );
   }

@@ -27,4 +27,4 @@ export {QuoteBlock} from './notes/QuoteBlock';
 export {Switcher} from './Switcher';
 export type {SwitcherOption} from './Switcher';
 export {CodeInput} from './CodeInput';
-export {WheatSeal} from './WheatSeal';
+export {HassadLogo, BrandSeal} from './HassadLogo';

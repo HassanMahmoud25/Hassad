@@ -75,7 +75,19 @@ export const BookFormScreen = ({route, navigation}: Props) => {
 
   const pick = async (camera: boolean) => {
     try {
-      const img = camera ? await ImagePicker.openCamera(PICK) : await ImagePicker.openPicker(PICK);
+      // The cropper is the library's own screen; dress it in Hassad's ink and
+      // paper (Android) and name it in the reader's language.
+      const opts = {
+        ...PICK,
+        cropperToolbarTitle: t('bookForm.cropTitle'),
+        cropperChooseText: t('bookForm.cropDone'),
+        cropperCancelText: t('common.cancel'),
+        cropperToolbarColor: colors.paper,
+        cropperStatusBarColor: colors.paper,
+        cropperToolbarWidgetColor: colors.ink,
+        cropperActiveWidgetColor: colors.goldInk,
+      };
+      const img = camera ? await ImagePicker.openCamera(opts) : await ImagePicker.openPicker(opts);
       setPhoto(img);
     } catch {
       // Cancelled, or permission declined: keep the current cover.
@@ -91,7 +103,11 @@ export const BookFormScreen = ({route, navigation}: Props) => {
   };
   const err = save.error ? toApiError(save.error) : undefined;
   // The backend reports Cloudinary/sharp failures as the text "Upload failed".
-  const uploadFailed = !!photo && err?.kind === 'server' && /upload|compression/i.test(err.message);
+  // The photo itself was refused (not an image, too large) vs the server
+  // couldn't store it. Older servers only say "Upload failed" in plain text.
+  const imageRejected = !!photo && (err?.code === 'INVALID_IMAGE' || err?.code === 'IMAGE_TOO_LARGE');
+  const uploadFailed =
+    !!photo && !imageRejected && err?.kind === 'server' && (/^(UPLOAD_|IMAGE_PROCESSING)/.test(err.code ?? '') || /upload|compression/i.test(err.message));
   const authorCleared = !!editing?.author && author.trim() === '';
   const shelfName = bookcase.shelves.find(s => s.folder._id === folderId)?.folder.name;
   // The design follows the title, settled a moment after typing stops, so
@@ -172,10 +188,10 @@ export const BookFormScreen = ({route, navigation}: Props) => {
         </Text>
       ) : null}
 
-      {uploadFailed ? (
+      {uploadFailed || imageRejected ? (
         <View style={{marginTop: 12, gap: 8}}>
           <Text role="small" tone="danger">
-            {t('bookForm.uploadFailed')}
+            {t(imageRejected ? 'bookForm.imageRejected' : 'bookForm.uploadFailed')}
           </Text>
           <Button
             label={t('bookForm.saveWithoutPhoto')}

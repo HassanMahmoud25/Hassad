@@ -25,6 +25,8 @@ interface AuthContextValue {
   /** Signs out on the server (best effort) and wipes everything personal on this device. */
   logout: () => Promise<void>;
   setUser: (user: User) => Promise<void>;
+  /** Swap in a new token for the same session (after a password change). */
+  replaceToken: (token: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -164,6 +166,10 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     }
   };
 
+  const replaceToken = async (token: string) => {
+    await AsyncStorage.setItem(TOKEN_KEY, token);
+  };
+
   const setUser = async (updatedUser: User) => {
     await AsyncStorage.setItem(USER_KEY, JSON.stringify(updatedUser));
     setUserState(updatedUser);
@@ -183,6 +189,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         activateSession: persistSession,
         logout,
         setUser,
+        replaceToken,
       }}>
       {children}
     </AuthContext.Provider>

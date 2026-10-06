@@ -2,15 +2,16 @@ import React, {ReactNode, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../../theme/ThemeProvider';
-import {bindings, gutter, NOTE_COLORS, Palette, ribbonFor} from '../../theme/tokens';
+import {bindings, gutter, NOTE_COLORS, Palette, palettes, ribbonFor} from '../../theme/tokens';
 import {TextRole} from '../../theme/type';
 import {currentLang, setLanguage} from '../../lib/locale';
-import {Button, Chip, Cover, Glass, Icon, IconButton, Plank, Ribbon, Segmented, ShelfRow, ShelfRowSkeleton, Skeleton, Spine, SpineCase, Text} from '../../ui';
+import {BrandSeal, Button, Chip, Cover, Glass, HassadLogo, Icon, IconButton, Plank, Ribbon, Segmented, ShelfRow, ShelfRowSkeleton, Skeleton, Spine, SpineCase, Text} from '../../ui';
 import type {IconName} from '../../ui';
 import {Screen} from '../../ui/Screen';
 import {Composition} from '../../ui/book/coverDesign';
 import {sampleBooks} from './fixtures';
 import {EmptyHarvest} from '../harvest/HarvestScreen';
+import {Envelope} from '../auth/Envelope';
 
 const ROLES: TextRole[] = ['hero', 'display1', 'display2', 'display3', 'title', 'read', 'excerpt', 'body', 'small', 'label', 'meta', 'eyebrow', 'button', 'numeral'];
 const ICONS: IconName[] = ['harvest', 'library', 'me', 'plus', 'search', 'bell', 'back', 'forward', 'chevronDown', 'arrowNext', 'more', 'star', 'share', 'edit', 'image', 'camera', 'lock', 'shelf', 'read', 'sort', 'grid', 'list', 'close', 'check', 'clock', 'offline', 'retry', 'mail', 'key', 'moon', 'sun', 'language', 'signOut', 'trash', 'info', 'copy', 'download'];
@@ -150,6 +151,20 @@ export const PlaygroundScreen = () => {
 
       {section === 'controls' && (
         <>
+          <Section title="Brand · logo on paper · seal · envelope">
+            <View style={[pad, {flexDirection: 'row', alignItems: 'center', gap: 18}]}>
+              <View style={{backgroundColor: palettes.light.paper, padding: 12, borderRadius: 8, flexDirection: 'row', alignItems: 'flex-end', gap: 14}}>
+                <HassadLogo size={24} />
+                <HassadLogo size={58} />
+                <HassadLogo size={96} />
+              </View>
+              <BrandSeal size={56} />
+            </View>
+            <View style={[pad, {flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 14}]}>
+              <Envelope sealed />
+              <Envelope sealed={false} />
+            </View>
+          </Section>
           <Section title="Buttons">
             <View style={[pad, {gap: 10}]}>
               <Button label="احصد فائدة" icon="plus" block />

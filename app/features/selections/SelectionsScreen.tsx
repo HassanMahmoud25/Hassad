@@ -66,7 +66,7 @@ export const SelectionsScreen = () => {
     );
   } else if (q.error) {
     const offline = toApiError(q.error).kind === 'network';
-    body = <StateBlock icon={offline ? 'offline' : 'info'} title={offline ? t('library.offlineTitle') : t('selections.errorTitle')} body={t('harvest.errorBody')} actionLabel={t('common.retry')} onAction={() => q.refetch()} />;
+    body = <StateBlock icon={offline ? 'offline' : 'info'} title={offline ? t('library.offlineTitle') : t('selections.errorTitle')} body={offline ? t('library.offlineBody') : t('harvest.errorBody')} actionLabel={t('common.retry')} onAction={() => q.refetch()} />;
   } else if (items.length === 0) {
     // A blank page with one gold ribbon, waiting for its first mark.
     body = (

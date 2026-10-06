@@ -1,6 +1,6 @@
 import React from 'react';
 import {I18nManager, StyleProp, ViewStyle} from 'react-native';
-import Svg, {Circle, Path, Rect} from 'react-native-svg';
+import Svg, {Circle, G, Path, Rect} from 'react-native-svg';
 
 // Hassad's single icon family (Design Lock v2 §12): 24-pt grid, 1.5 stroke,
 // round caps and joins. Paths are drawn for left-to-right; `MIRRORED` glyphs
@@ -217,8 +217,10 @@ export const Icon = ({name, size = 22, color, strokeWidth = 1.5, filled = false,
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
-      style={[flip && {transform: [{scaleX: -1}]}, style]}>
-      {S[name]}
+      style={style}>
+      {/* Mirror inside the drawing: a style transform on the Svg view can be
+          dropped by Fabric on re-render, leaving an arrow pointing backwards. */}
+      {flip ? <G transform="matrix(-1 0 0 1 24 0)">{S[name]}</G> : S[name]}
     </Svg>
   );
 };

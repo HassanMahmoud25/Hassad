@@ -232,7 +232,22 @@ export const MeScreen = () => {
               </React.Fragment>
             ))}
         </View>
-      ) : null}
+      ) : (
+        // An empty library: say where the figures will appear, between the same hairlines.
+        <View
+          style={{
+            marginHorizontal: gutter,
+            marginTop: 26,
+            paddingVertical: 16,
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            borderColor: colors.rule,
+          }}>
+          <Text role="small" tone="ink3" align="center">
+            {t('me.emptyFacts')}
+          </Text>
+        </View>
+      )}
 
       {/* What they chose to keep. */}
       {picked.length > 0 ? (
@@ -437,7 +452,7 @@ export const MeScreen = () => {
           <Row icon="check" label={t('me.verified')} tone="ok" />
         ) : (
           <Row
-            icon="check"
+            icon="clock"
             label={t('me.verify')}
             onPress={() => navigation.navigate('verifyEmail', {from: 'me'})}
           />

@@ -73,7 +73,7 @@ export const LibraryScreen = () => {
     );
   } else if (bookcase.error) {
     const offline = bookcase.error.kind === 'network';
-    body = <StateBlock icon={offline ? 'offline' : 'info'} title={offline ? t('library.offlineTitle') : t('library.errorTitle')} body={t('library.errorBody')} actionLabel={t('common.retry')} onAction={bookcase.refresh} />;
+    body = <StateBlock icon={offline ? 'offline' : 'info'} title={offline ? t('library.offlineTitle') : t('library.errorTitle')} body={offline ? t('library.offlineBody') : t('library.errorBody')} actionLabel={t('common.retry')} onAction={bookcase.refresh} />;
   } else if (isEmpty) {
     body = <EmptyLibrary onAddBook={() => addBook()} onAddShelf={() => setShelfFormOpen(true)} />;
   } else if (view === 'all') {

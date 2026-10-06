@@ -47,12 +47,15 @@ export const requestPasswordReset = async (): Promise<void> => {
   await axiosInstance.post('/api/auth/reset-password-request');
 };
 
+/** Changing the password ends every older session; the server answers with a
+ * fresh token for this device (older deployments send none). */
 export const resetPassword = async (data: {
   otp: string;
   password: string;
   verify_password: string;
-}): Promise<void> => {
-  await axiosInstance.post('/api/auth/reset-password', data);
+}): Promise<{token?: string}> => {
+  const res = await axiosInstance.post('/api/auth/reset-password', data);
+  return res.data ?? {};
 };
 
 export const uploadProfilePicture = async (image: {

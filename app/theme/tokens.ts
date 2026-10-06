@@ -162,7 +162,9 @@ export const withAlpha = (hex: string, alpha: number): string => {
  * cloth itself deepened on Night. */
 export const bookTint = (cloth: string, theme: ThemeName) => {
   if (theme === 'light') {
-    return {top: mix(cloth, palettes.light.paper, 0.85), mid: mix(cloth, palettes.light.paper, 0.93), glow: withAlpha(cloth, 0.14)};
+    // The glow is light behind the book, never a film of the cloth: a dark
+    // binding at low alpha greys the paper into a smudge.
+    return {top: mix(cloth, palettes.light.paper, 0.85), mid: mix(cloth, palettes.light.paper, 0.93), glow: 'rgba(255,250,240,0.85)'};
   }
   // Light cloths (bone, cream, sky…) would deepen to a grey haze; take them
   // further toward night so the header stays a binding colour.

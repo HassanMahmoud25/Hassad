@@ -1,0 +1,4 @@
+<resources>
+    <!-- Night paper (palettes.dark.paper) when the system is in dark mode. -->
+    <color name="hassad_window">#13110E</color>
+</resources>

@@ -45,19 +45,17 @@ export const HarvestScreen = () => {
   }, [harvest.selections, harvest.recent]);
 
   const header = (
-    <View style={{flexDirection: 'row', alignItems: 'flex-start', gap: 10, paddingHorizontal: gutter}}>
-      <View style={{flex: 1}}>
-        <Text role="meta" tone="ink3">
+    <View style={{paddingHorizontal: gutter}}>
+      <View style={{flexDirection: 'row', alignItems: 'center', gap: 10}}>
+        <Text role="meta" tone="ink3" numberOfLines={1} style={{flex: 1}}>
           {dateLine}
         </Text>
-        <Text role="display1" accessibilityRole="header" numberOfLines={2} style={{marginTop: 2}}>
-          {title}
-        </Text>
-      </View>
-      {harvest.books.length > 0 && <IconButton icon="search" label={t('harvest.search')} onPress={() => navigation.navigate('search')} style={{marginTop: 6}} />}
-      <View style={{marginTop: 3}}>
+        {harvest.books.length > 0 && <IconButton icon="search" label={t('harvest.search')} onPress={() => navigation.navigate('search')} />}
         <Seal name={name || user?.email || '·'} onPress={() => navigation.navigate('me')} accessibilityLabel={t('harvest.me')} accessibilityHint={t('me.sealHint')} />
       </View>
+      <Text role="display1" accessibilityRole="header" numberOfLines={2} style={{marginTop: 10}}>
+        {title}
+      </Text>
     </View>
   );
 
@@ -92,7 +90,7 @@ export const HarvestScreen = () => {
     return (
       <Screen tab>
         {header}
-        <StateBlock icon={offline ? 'offline' : 'info'} title={offline ? t('library.offlineTitle') : t('harvest.errorTitle')} body={t('harvest.errorBody')} actionLabel={t('common.retry')} onAction={harvest.refresh} />
+        <StateBlock icon={offline ? 'offline' : 'info'} title={offline ? t('library.offlineTitle') : t('harvest.errorTitle')} body={offline ? t('library.offlineBody') : t('harvest.errorBody')} actionLabel={t('common.retry')} onAction={harvest.refresh} />
       </Screen>
     );
   }
@@ -201,12 +199,13 @@ export const HarvestScreen = () => {
   );
 };
 
-/** No books yet: the bookcase is waiting, with one place for the first book. */
+/** No books yet: one place for the first book, on a short plank of its own.
+ * (The Library tab shows the whole empty bookcase; Home is the first step.) */
 export const EmptyHarvest = ({onAdd}: {onAdd: () => void}) => {
   const {t} = useT();
   return (
     <View style={{marginTop: 40}}>
-      <View style={{flexDirection: 'row', alignItems: 'flex-end', gap: 10, paddingHorizontal: gutter, height: 130}}>
+      <View style={{flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', height: 130}}>
         <View>
           <Slot width={82} height={123} />
           <View style={{position: 'absolute', top: 0, bottom: 0, start: 0, end: 0, alignItems: 'center', justifyContent: 'center'}}>
@@ -214,7 +213,7 @@ export const EmptyHarvest = ({onAdd}: {onAdd: () => void}) => {
           </View>
         </View>
       </View>
-      <Plank />
+      <Plank style={{alignSelf: 'center', width: 196, marginHorizontal: 0}} />
       <View style={{paddingHorizontal: 36, marginTop: 36, alignItems: 'center'}}>
         <Text role="display2" align="center">
           {t('harvest.emptyTitle')}
